@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package>
+  <name>xbot_bringup</name>
+  <version>0.0.0</version>
+  <description>The xbot_bringup package</description>
+  <maintainer email="roc@todo.todo">roc</maintainer>
+  <license>TODO</license>
+  <build_depend>message_generation</build_depend>
+  <run_depend>message_runtime</run_depend>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>std_msgs</run_depend>
+
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>visualization_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>rospkg</build_depend>
+
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>visualization_msgs</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>rospkg</run_depend>
+
+</package>

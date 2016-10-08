@@ -1,0 +1,8 @@
+<library path="lib/libxbot_nodelet">
+  <class name="xbot_node/XbotNodelet" type="xbot::XbotNodelet" base_class_type="nodelet::Nodelet">
+    <description>
+      Nodelet version of the Xbot node
+    </description>
+  </class>
+</library>
+

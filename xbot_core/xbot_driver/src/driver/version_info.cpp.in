@@ -1,0 +1,11 @@
+#include "xbot_driver/version_info.hpp"
+
+namespace xbot
+{
+
+std::string VersionInfo::getSoftwareVersion()
+{
+  return std::string("@xbot_driver_VERSION@");
+}
+
+} //namespace xbot

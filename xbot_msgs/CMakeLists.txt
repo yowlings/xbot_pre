@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(xbot_msgs)
+find_package(catkin REQUIRED COMPONENTS std_msgs actionlib_msgs message_generation)
+
+add_message_files(DIRECTORY msg
+                      FILES SensorState.msg
+                            ControllerInfo.msg
+                            DockInfraRed.msg
+                            KeyboardInput.msg
+                            MotorPower.msg
+                            ScanAngle.msg
+                 )
+
+add_action_files(DIRECTORY action
+                     FILES AutoDocking.action
+                )
+
+generate_messages(DEPENDENCIES std_msgs actionlib_msgs)
+
+catkin_package(CATKIN_DEPENDS message_runtime std_msgs actionlib_msgs)

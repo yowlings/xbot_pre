@@ -1,0 +1,3 @@
+#!/bin/bash
+
+md5sum xbot_firmware* > MD5SUMS
