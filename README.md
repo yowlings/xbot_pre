@@ -21,4 +21,7 @@ Like kobuki_node
 
 ##xbot_safety_controller
 Like kobuki_safety_controller
+<<<<<<< HEAD
 
+=======
+>>>>>>> ef075f57552c89ff59b23127c0cf24defdee9388
