@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<robot name="Xbot">
-
+<robot name="xbot" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find turtlebot_description)/urdf/common_properties.urdf.xacro"/>
 <material name="blue">
     <color rgba="0 0 .8 1"/>
   </material>
@@ -53,7 +53,7 @@
     </visual>
   </link>
   <joint name="base_to_right_wheel" type="continuous">
-    <axis rpy="0 0 0" xyz="0 1 0"/>
+    <axis rpy="0 0 0" xyz="1 0 0"/>
     <parent link="base_link"/>
     <child link="right_wheel"/>
     <origin rpy="0 0 0" xyz="0 -0.235 -0.0085"/>
@@ -69,7 +69,7 @@
     </visual>
   </link>
   <joint name="base_to_left_wheel" type="continuous">
-    <axis rpy="0 0 0" xyz="0 1 0"/>
+    <axis rpy="0 0 0" xyz="1 0 0"/>
     <parent link="base_link"/>
     <child link="left_wheel"/>
     <origin rpy="0 0 0" xyz="0 0.235 -0.0085"/>
@@ -162,6 +162,24 @@
     <origin rpy="0 0 0" xyz="0 0 0.4"/>
   </joint>
 
+
+<link name="camera_platform">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0 0 0"/>
+      </geometry>
+    </visual>
+</link>
+<joint name="base_to_camera_platform" type="fixed">
+    <axis rpy="0 0 0" xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="camera_platform"/>
+    <origin rpy="0 0 0" xyz="0.2 0 0.23"/>
+  </joint>
+
+
+
 <link name="platform2">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -231,4 +249,6 @@
     <origin rpy="0 0 0" xyz="0 0 0.035"/>
   </joint>
 
+<xacro:include filename="./asus_xtion_pro.urdf.xacro"/>
 </robot>
+

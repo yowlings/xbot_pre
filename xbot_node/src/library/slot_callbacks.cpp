@@ -155,21 +155,47 @@ void XbotRos::publishRawInertia()
 
 void XbotRos::publishDockIRData()
 {
-  if (ros::ok())
-  {
-    if (dock_ir_publisher.getNumSubscribers() > 0)
+    if (ros::ok())
     {
+        if (dock_ir_publisher.getNumSubscribers() > 0)
+        {
 
-      // Publish as shared pointer to leverage the nodelets' zero-copy pub/sub feature
-      xbot_msgs::DockInfraRedPtr msg(new xbot_msgs::DockInfraRed);
+            // Publish as shared pointer to leverage the nodelets' zero-copy pub/sub feature
+            xbot_msgs::DockInfraRedPtr msg(new xbot_msgs::DockInfraRed);
+            CoreSensors::Data data_echo = xbot.getCoreSensorData();
+            msg->header.frame_id = "dock_ir_link";
+            msg->header.stamp = ros::Time::now();
 
-      msg->header.frame_id = "dock_ir_link";
-      msg->header.stamp = ros::Time::now();
+            if((data_echo.echo_1>0.1)&&(data_echo.echo_1<0.2))
+            {
+                msg->data.push_back(1);
+            }
+            else
+            {
+                msg->data.push_back(16);
+            }
+            if((data_echo.echo_2>0.1)&&(data_echo.echo_2<0.2))
+            {
+                msg->data.push_back(2);
+            }
+            else
+            {
+                msg->data.push_back(8);
+            }
+            if((data_echo.echo_3>0.1)&&(data_echo.echo_3<0.2))
+            {
+                msg->data.push_back(4);
+            }
+            else
+            {
+                msg->data.push_back(32);
+            }
 
 
-      dock_ir_publisher.publish(msg);
+
+            dock_ir_publisher.publish(msg);
+        }
     }
-  }
 }
 
 /*****************************************************************************

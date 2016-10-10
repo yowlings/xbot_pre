@@ -7,7 +7,7 @@
 
 
 	<!-- Load the URDF/Xacro model of our robot -->
-	<arg name="urdf_file" default="$(find xacro)/xacro.py '$(find xbot)/urdf/Xbot.urdf'" />
+	<arg name="urdf_file" default="$(find xacro)/xacro.py '$(find xbot)/urdf/Xbot.urdf.xacro'" />
 	<param name="robot_description" command="$(arg urdf_file)" />
 
 	<!-- state publisher -->
