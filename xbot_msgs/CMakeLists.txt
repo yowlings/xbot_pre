@@ -6,6 +6,7 @@ add_message_files(DIRECTORY msg
                       FILES SensorState.msg
                       BumperEvent.msg
                       CliffEvent.msg
+                      RobotStateEvent.msg
                       PowerSystemEvent.msg
                       WheelDropEvent.msg
                             ControllerInfo.msg
