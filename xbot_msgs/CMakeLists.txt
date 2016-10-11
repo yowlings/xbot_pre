@@ -4,6 +4,10 @@ find_package(catkin REQUIRED COMPONENTS std_msgs actionlib_msgs message_generati
 
 add_message_files(DIRECTORY msg
                       FILES SensorState.msg
+                      BumperEvent.msg
+                      CliffEvent.msg
+                      PowerSystemEvent.msg
+                      WheelDropEvent.msg
                             ControllerInfo.msg
                             DockInfraRed.msg
                             KeyboardInput.msg
