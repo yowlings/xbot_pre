@@ -1,5 +1,6 @@
 # xbot
 This is the xbot bringup ROS package and xbot driver.
+![image](https://github.com/yowlings/xbot/blob/master/xbot_0.png)
 ![image](https://github.com/yowlings/xbot/blob/master/IMG_1663.JPG)
 ![image](https://github.com/yowlings/xbot/blob/master/IMG_1665.JPG)
 ##xbot
