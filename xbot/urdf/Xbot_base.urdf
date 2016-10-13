@@ -26,18 +26,18 @@
     <parent link="base_footprint"/>
     <child link="base_link"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
-  </joint>
+    </joint>
 
   <link name="base_link">
     <visual>
       <geometry>
-        <cylinder length="0.075" radius="0.235"/>
+        <cylinder length="0.1" radius="0.2"/>
       </geometry>
       <material name="black"/>
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.1" radius="0.26"/>
+        <cylinder length="0.1" radius="0.24"/>
       </geometry>
     </collision>
   </link>
@@ -52,11 +52,11 @@
       <material name="blue"/>
     </visual>
   </link>
-  <joint name="base_to_right_wheel" type="continuous">
+  <joint name="base_to_right_wheel" type="fixed">
     <axis rpy="0 0 0" xyz="1 0 0"/>
     <parent link="base_link"/>
     <child link="right_wheel"/>
-    <origin rpy="0 0 0" xyz="0 -0.235 -0.0085"/>
+    <origin rpy="0 0 0" xyz="0 -0.20 -0.0085"/>
   </joint>
 
   <link name="left_wheel">
@@ -68,11 +68,11 @@
       <material name="blue"/>
     </visual>
   </link>
-  <joint name="base_to_left_wheel" type="continuous">
+  <joint name="base_to_left_wheel" type="fixed">
     <axis rpy="0 0 0" xyz="1 0 0"/>
     <parent link="base_link"/>
     <child link="left_wheel"/>
-    <origin rpy="0 0 0" xyz="0 0.235 -0.0085"/>
+    <origin rpy="0 0 0" xyz="0 0.20 -0.0085"/>
   </joint>
 
   <link name="frontright_omniwheel">
