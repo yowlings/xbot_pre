@@ -117,6 +117,7 @@ public:
   /* Be sure to lock/unlock the data access (lockDataAccess and unlockDataAccess)
    * around any getXXX calls - see the doxygen notes for lockDataAccess. */
   ecl::Angle<float> getHeading() const;
+  int getDebugSensors() const;
   float getAngularVelocity() const;
   Battery batteryStatus() const { return Battery(core_sensors.data.battery, core_sensors.data.charger); }
 

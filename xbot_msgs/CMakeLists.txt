@@ -4,6 +4,7 @@ find_package(catkin REQUIRED COMPONENTS std_msgs actionlib_msgs message_generati
 
 add_message_files(DIRECTORY msg
                       FILES SensorState.msg
+                      DebugSensor.msg
                       BumperEvent.msg
                       CliffEvent.msg
                       RobotStateEvent.msg

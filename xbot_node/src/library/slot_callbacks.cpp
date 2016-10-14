@@ -52,6 +52,8 @@ void XbotRos::processStreamData() {
   publishDockIRData();
   publishInertia();
   publishRawInertia();
+  publishDebugSensors();
+
 }
 
 /*****************************************************************************
@@ -151,6 +153,23 @@ void XbotRos::publishRawInertia()
     const double digit_to_dps = 0.00875; // digit to deg/s ratio, comes from datasheet of 3d gyro[L3G4200D].
 //    unsigned int length = data.followed_data_length/3;
   }
+}
+
+void XbotRos::publishDebugSensors()
+{
+    if ( ros::ok() && (debug_sensors_publisher.getNumSubscribers() > 0) )
+    {
+        xbot_msgs::DebugSensorPtr msg(new xbot_msgs::DebugSensor);
+        CoreSensors::Data data_debug = xbot.getCoreSensorData();
+
+        msg->header.frame_id = "encoder";
+        msg->header.stamp = ros::Time::now();
+        msg->data.push_back(data_debug.left_encoder);
+        msg->data.push_back(data_debug.right_encoder);
+        debug_sensors_publisher.publish(msg);
+
+    }
+
 }
 
 void XbotRos::publishDockIRData()

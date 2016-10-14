@@ -332,11 +332,16 @@ ecl::Angle<float> Xbot::getHeading() const
   return ecl::wrap_angle(heading - heading_offset);
 }
 
+int Xbot::getDebugSensors() const
+{
+    return (static_cast<int>(core_sensors.data.left_encoder));
+}
 float Xbot::getAngularVelocity() const
 {
   // raw data angles are in hundredths of a degree, convert to radians.
   return (static_cast<float>(imu_sensors.data.yaw) / 10.0) * ecl::pi / 180.0;
 }
+
 
 /*****************************************************************************
  ** Implementation [Raw Data Accessors]
