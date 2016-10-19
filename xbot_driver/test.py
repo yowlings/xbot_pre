@@ -21,6 +21,6 @@ thread.start_new_thread(myxbot.default_cmd,())
 # myxbot.lift(10)
 
 while 1:
-	myxbot.move(0,100)
+	myxbot.move(0.1,20)
 	
 

@@ -20,4 +20,12 @@
 	<arg name="serialport" value="$(arg serialport)" /> 
 	<param name="sim" value="true"/> 
 	</include>
+
+	<!--sensor-->	
+	<include file="$(find xbot_bringup)/launch/includes/asus_sense.launch">
+	<arg name="rgb_processing" default="false" />
+	<arg name="depth_registration" default="false" />
+	<arg name="depth_processing" default="false" />
+	<arg name="scan_topic" default="/scan" />
+  </include>
 </launch>
