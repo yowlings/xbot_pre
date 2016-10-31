@@ -37,6 +37,7 @@
   <arg name="depth_registered_processing" value="$(arg depth_registered_processing)"/>
   <arg name="disparity_processing" value="$(arg disparity_processing)"/>
   <arg name="disparity_registered_processing" value="$(arg disparity_registered_processing)"/>
+
  </include>
 
    <!--Laserscan-->
@@ -49,6 +50,8 @@
    <remap from="scan" to="$(arg scan_topic)"/>
    <remap from="$(arg camera)/image" to="$(arg camera)/$(arg depth)/image_raw"/>
    <remap from="$(arg camera)/scan" to="$(arg scan_topic)"/>
+   
+
   </node>
  </group>
 </launch>

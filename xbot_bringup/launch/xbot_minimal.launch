@@ -27,6 +27,6 @@
 	<arg name="depth_registration" default="false" />
 	<arg name="depth_processing" default="false" />
 	<arg name="scan_topic" default="/scan" />
-	<arg name = "3d_sensor" value = "asus_xtion_pro"/>
-  </include>
+	<arg name = "3d_sensor" value = "asus_xtion_pro"/>	
+  	</include>
 </launch>
