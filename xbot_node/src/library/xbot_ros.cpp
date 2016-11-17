@@ -183,6 +183,7 @@ bool XbotRos::init(ros::NodeHandle& nh)
 
   odometry.init(nh, name);
 
+
   /*********************
    ** Driver Init
    **********************/
@@ -296,6 +297,7 @@ void XbotRos::advertiseTopics(ros::NodeHandle& nh)
   raw_control_command_publisher = nh.advertise< std_msgs::Int16MultiArray > ("debug/raw_control_command", 100);
 
   debug_sensors_publisher = nh.advertise < xbot_msgs::DebugSensor> ("debug/sensors_data",100);
+  robot_state_publisher = nh.advertise <xbot_msgs::XbotState> ("xbot/state",100);
 }
 
 /**
@@ -308,6 +310,7 @@ void XbotRos::subscribeTopics(ros::NodeHandle& nh)
   reset_odometry_subscriber = nh.subscribe("commands/reset_odometry", 10, &XbotRos::subscribeResetOdometry, this);
   motor_power_subscriber = nh.subscribe("commands/motor_power", 10, &XbotRos::subscribeMotorPower, this);
   controller_info_command_subscriber =  nh.subscribe(std::string("commands/controller_info"), 10, &XbotRos::subscribeControllerInfoCommand, this);
+  motor_control_subscriber = nh.subscribe("commands/other_motors", 10, &XbotRos::subscribeMotorControlCommand, this);
 }
 
 

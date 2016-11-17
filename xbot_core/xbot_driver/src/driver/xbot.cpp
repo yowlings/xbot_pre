@@ -54,7 +54,11 @@ Xbot::Xbot() :
     , is_connected(false)
     , is_alive(false)
     , heading_offset(0.0)
+    , HeightPercent(0)
+    , CameraDegree(90)
+    , PlatformDegree(90)
 {
+
 }
 
 /**
@@ -65,6 +69,7 @@ Xbot::~Xbot()
   disable();
   shutdown_requested = true; // thread's spin() will catch this and terminate
   thread.join();
+  resetXbotState();
   sig_debug.emit("Device: xbot driver terminated.");
 }
 
@@ -322,12 +327,13 @@ void Xbot::fixPayload(ecl::PushAndPop<unsigned char> & byteStream)
  ** Implementation [Human Friendly Accessors]
  *****************************************************************************/
 
-ecl::Angle<float> Xbot::getHeading() const
+float Xbot::getHeading() const
 {
-  ecl::Angle<float> heading;
+//  ecl::Angle<float>heading;
+    float heading;
   // raw data angles are in hundredths of a degree, convert to radians.
-  heading = (imu_sensors.data.yaw / 10.0) * ecl::pi / 180.0;
-  std::cout<<"heading:"<<heading<<"heading_offset:"<<heading_offset<<std::endl;
+  heading = (imu_sensors.data.yaw / 10.0)*ecl::pi / 180.0;
+  std::cout<<"heading:"<<heading<<" | heading_offset:"<<heading_offset<<std::endl;
 
   return ecl::wrap_angle(heading - heading_offset);
 }
@@ -342,6 +348,13 @@ float Xbot::getAngularVelocity() const
   return (static_cast<float>(imu_sensors.data.yaw) / 10.0) * ecl::pi / 180.0;
 }
 
+
+
+void Xbot::resetXbotState()
+{
+    setLiftControl(0);
+    setPlatformCameraControl(90,90);
+}
 
 /*****************************************************************************
  ** Implementation [Raw Data Accessors]
@@ -387,18 +400,22 @@ void Xbot::updateOdometry(ecl::Pose2D<double> &pose_update, ecl::linear_algebra:
 void Xbot::setBaseControl(const float &linear_velocity, const float &angular_velocity)
 {
   diff_drive.setVelocityCommands(linear_velocity, angular_velocity);
-}
-
-
-void Xbot::setLiftControl(const unsigned char &lift_height)
-{
-    sendCommand(Command::SetLiftHeightControl(lift_height));
 
 }
 
-void Xbot::setPlatformCameraControl(const unsigned char &platform_percent, const unsigned char &camera_percent)
+
+void Xbot::setLiftControl(const unsigned char &height_percent)
 {
-    sendCommand(Command::SetPlatformAndCameraControl(platform_percent,camera_percent));
+    sendCommand(Command::SetLiftHeightControl(height_percent));
+    HeightPercent = height_percent;
+
+}
+
+void Xbot::setPlatformCameraControl(const unsigned char &platform_degree, const unsigned char &camera_degree)
+{
+    sendCommand(Command::SetPlatformAndCameraControl(platform_degree,camera_degree));
+    PlatformDegree = platform_degree;
+    CameraDegree = camera_degree;
 
 }
 
@@ -420,7 +437,9 @@ void Xbot::sendBaseControlCommand()
   diff_drive.velocityCommands(velocity_commands_received);
   std::vector<float> velocity_commands = diff_drive.velocityCommands();
   std::cout << "linear_velocity: " << velocity_commands[0] << ", angular_velocity: " << velocity_commands[1] << std::endl;
-  sendCommand(Command::SetVelocityControl(velocity_commands[0], velocity_commands[1]));
+  if ((velocity_commands[0]!=0) || (velocity_commands[1]!=0)){
+      sendCommand(Command::SetVelocityControl(velocity_commands[0], velocity_commands[1]));
+  }
 
 //  //experimental; send raw control command and received command velocity
 //  velocity_commands_debug=velocity_commands;

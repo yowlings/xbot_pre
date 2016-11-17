@@ -63,6 +63,7 @@
 #include <xbot_msgs/SensorState.h>
 #include <xbot_msgs/DebugSensor.h>
 #include <xbot_driver/xbot.hpp>
+#include <xbot_msgs/XbotState.h>
 #include "odometry.hpp"
 
 /*****************************************************************************
@@ -100,11 +101,12 @@ private:
   ros::Publisher power_event_publisher;
   ros::Publisher raw_data_command_publisher, raw_data_stream_publisher, raw_control_command_publisher;
 
-  ros::Publisher debug_sensors_publisher;
+  ros::Publisher debug_sensors_publisher, robot_state_publisher;
 
   ros::Subscriber velocity_command_subscriber;
   ros::Subscriber controller_info_command_subscriber;
   ros::Subscriber motor_power_subscriber, reset_odometry_subscriber;
+  ros::Subscriber motor_control_subscriber;
 
   void advertiseTopics(ros::NodeHandle& nh);
   void subscribeTopics(ros::NodeHandle& nh);
@@ -116,6 +118,7 @@ private:
   void subscribeResetOdometry(const std_msgs::EmptyConstPtr);
   void subscribeMotorPower(const xbot_msgs::MotorPowerConstPtr msg);
   void subscribeControllerInfoCommand(const xbot_msgs::ControllerInfoConstPtr msg);
+  void subscribeMotorControlCommand(const xbot_msgs::XbotState msg);
 
   /*********************
    ** SigSlots
@@ -138,6 +141,7 @@ private:
   void publishControllerInfo();
 
   void publishDebugSensors();
+  void publishRobotState();
 
 
 

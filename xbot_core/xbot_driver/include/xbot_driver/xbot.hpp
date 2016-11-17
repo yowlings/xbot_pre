@@ -98,6 +98,7 @@ public:
   bool enable(); /**< Enable power to the motors. **/
   bool disable(); /**< Disable power to the motors. **/
   void shutdown() { shutdown_requested = true; } /**< Gently terminate the worker thread. **/
+  void resetXbotState();
 
   /******************************************
   ** Packet Processing
@@ -116,10 +117,13 @@ public:
   *******************************************/
   /* Be sure to lock/unlock the data access (lockDataAccess and unlockDataAccess)
    * around any getXXX calls - see the doxygen notes for lockDataAccess. */
-  ecl::Angle<float> getHeading() const;
+  float getHeading() const;
   int getDebugSensors() const;
   float getAngularVelocity() const;
   Battery batteryStatus() const { return Battery(core_sensors.data.battery, core_sensors.data.charger); }
+  unsigned char getHeightPercent() {return HeightPercent;}
+  unsigned char getCameraDegree(){return CameraDegree;}
+  unsigned char getPlatformDegree(){return PlatformDegree;}
 
   /******************************************
   ** Getters - Raw Data Api
@@ -145,8 +149,8 @@ public:
   ** Hard Commands
   **********************/
   void setBaseControl(const float &linear_velocity, const float &angular_velocity);
-  void setLiftControl(const unsigned char &lift_height);
-  void setPlatformCameraControl(const unsigned char &platform_percent, const unsigned char &camera_percent);
+  void setLiftControl(const unsigned char &height_percent);
+  void setPlatformCameraControl(const unsigned char &platform_degree, const unsigned char &camera_degree);
   void resetXbot();
 
 private:
@@ -155,6 +159,13 @@ private:
   **********************/
   ecl::Thread thread;
   bool shutdown_requested; // helper to shutdown the worker thread.
+
+  /*********************
+  ** Record RobotState
+  **********************/
+  unsigned char HeightPercent;
+  unsigned char PlatformDegree;
+  unsigned char CameraDegree;
 
   /*********************
   ** Odometry

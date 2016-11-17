@@ -53,6 +53,7 @@ void XbotRos::processStreamData() {
   publishInertia();
   publishRawInertia();
   publishDebugSensors();
+  publishRobotState();
 
 }
 
@@ -63,6 +64,9 @@ void XbotRos::processStreamData() {
 void XbotRos::publishSensorState()
 {
   if ( ros::ok() ) {
+//      float heading = xbot.getHeading();
+
+//      ROS_ERROR("%f",heading);
     if (sensor_state_publisher.getNumSubscribers() > 0) {
       xbot_msgs::SensorState state;
       CoreSensors::Data data = xbot.getCoreSensorData();
@@ -120,6 +124,7 @@ void XbotRos::publishInertia()
 
       msg->orientation = tf::createQuaternionMsgFromRollPitchYaw(0.0, 0.0, xbot.getHeading());
 
+
       // set a non-zero covariance on unused dimensions (pitch and roll); this is a requirement of robot_pose_ekf
       // set yaw covariance as very low, to make it dominate over the odometry heading when combined
       // 1: fill once, as its always the same;  2: using an invented value; cannot we get a realistic estimation?
@@ -167,6 +172,26 @@ void XbotRos::publishDebugSensors()
         msg->data.push_back(data_debug.left_encoder);
         msg->data.push_back(data_debug.right_encoder);
         debug_sensors_publisher.publish(msg);
+
+    }
+
+}
+
+void XbotRos::publishRobotState()
+{
+    ros::Rate r(10);
+    if ( ros::ok() && (robot_state_publisher.getNumSubscribers() > 0) )
+    {
+        xbot_msgs::XbotStatePtr msg(new xbot_msgs::XbotState);
+        CoreSensors::Data data = xbot.getCoreSensorData();
+
+        msg->power = data.power_voltage;
+        msg->height_percent = xbot.getHeightPercent();
+        msg->platform_degree = xbot.getPlatformDegree();
+        msg->camera_degree = xbot.getCameraDegree();
+
+        robot_state_publisher.publish(msg);
+        r.sleep();
 
     }
 
