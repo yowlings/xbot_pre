@@ -87,6 +87,7 @@ bool Odometry::commandTimeout() const {
 void Odometry::update(const ecl::Pose2D<double> &pose_update, ecl::linear_algebra::Vector3d &pose_update_rates,
                       double imu_heading, double imu_angular_velocity) {
   pose *= pose_update;
+//  ROS_ERROR("pose.heading:%f",pose.heading());
 
 //  if (use_imu_heading == true) {
 //    // Overwite with gyro heading data

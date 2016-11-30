@@ -152,6 +152,7 @@ void XbotRos::publishRawInertia()
   {
     // Publish as shared pointer to leverage the nodelets' zero-copy pub/sub feature
     sensor_msgs::ImuPtr msg(new sensor_msgs::Imu);
+//    ImuSensors::Data imu_data_raw=xbot.getImuSensorData();
 
     ros::Time now = ros::Time::now();
     ros::Duration interval(0.01); // Time interval between each sensor reading.
@@ -171,6 +172,7 @@ void XbotRos::publishDebugSensors()
         msg->header.stamp = ros::Time::now();
         msg->data.push_back(data_debug.left_encoder);
         msg->data.push_back(data_debug.right_encoder);
+        msg->heading=xbot.getHeading();
         debug_sensors_publisher.publish(msg);
 
     }

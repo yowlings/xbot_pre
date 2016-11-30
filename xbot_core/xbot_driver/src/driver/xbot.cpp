@@ -329,10 +329,10 @@ void Xbot::fixPayload(ecl::PushAndPop<unsigned char> & byteStream)
 
 float Xbot::getHeading() const
 {
-//  ecl::Angle<float>heading;
-    float heading;
-  // raw data angles are in hundredths of a degree, convert to radians.
-  heading = (imu_sensors.data.yaw / 10.0)*ecl::pi / 180.0;
+  ecl::Angle<float>heading;
+//    float heading;
+  // raw data angles are in tens of a degree, convert to radians.
+  heading = (static_cast<float>(imu_sensors.data.yaw) / 10.0)*ecl::pi / 180.0;
   std::cout<<"heading:"<<heading<<" | heading_offset:"<<heading_offset<<std::endl;
 
   return ecl::wrap_angle(heading - heading_offset);
