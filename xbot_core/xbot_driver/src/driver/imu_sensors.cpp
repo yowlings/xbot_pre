@@ -72,7 +72,9 @@ bool ImuSensors::deserialise(ecl::PushAndPop<unsigned char> & byteStream)
   buildVariable(data.mag_z, byteStream);
 
   buildVariable(data.pressure, byteStream);
-  buildVariable(data.yaw, byteStream);
+  buildVariable(data.yaw,byteStream);
+//  buildVariable(data.yaw, byteStream);
+  std::cout<<"yaw: "<<data.yaw<<std::endl;
   buildVariable(data.pitch, byteStream);
   buildVariable(data.roll, byteStream);
 

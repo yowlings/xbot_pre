@@ -41,7 +41,7 @@ public:
   void update(const unsigned int &time_stamp,
               const uint16_t &left_encoder,
               const uint16_t &right_encoder,
-              ecl::Pose2D<double> &pose_update,
+              ecl::LegacyPose2D<double> &pose_update,
               ecl::linear_algebra::Vector3d &pose_update_rates);
   void reset();
   void getWheelJointStates(float &wheel_left_angle, float &wheel_left_angle_rate,

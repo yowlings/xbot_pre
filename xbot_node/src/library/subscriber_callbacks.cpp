@@ -116,6 +116,12 @@ void XbotRos::subscribeMotorPower(const xbot_msgs::MotorPowerConstPtr msg)
   }
 }
 
+void XbotRos::subscribeMotorControlCommand(const xbot_msgs::XbotState msg)
+{
+    xbot.setLiftControl(msg.height_percent);
+    xbot.setPlatformCameraControl(msg.platform_degree, msg.camera_degree);
+}
+
 void XbotRos::subscribeControllerInfoCommand(const xbot_msgs::ControllerInfoConstPtr msg)
 {
   if( msg->p_gain < 0.0f ||  msg->i_gain < 0.0f ||  msg->d_gain < 0.0f) {

@@ -38,19 +38,19 @@ public:
   ImuSensors() : packet_handler::payloadBase(false, 32) {};
 
   struct Data {
-    uint16_t acce_x;
-    uint16_t acce_y;
-    uint16_t acce_z;
-    uint16_t gyro_x;
-    uint16_t gyro_y;
-    uint16_t gyro_z;
-    uint16_t mag_x;
-    uint16_t mag_y;
-    uint16_t mag_z;
+    short acce_x;
+    short acce_y;
+    short acce_z;
+    short gyro_x;
+    short gyro_y;
+    short gyro_z;
+    short mag_x;
+    short mag_y;
+    short mag_z;
     float pressure;
-    uint16_t yaw;
-    uint16_t pitch;
-    uint16_t roll;
+    short yaw;
+    short pitch;
+    short roll;
     unsigned int timestamp;
 
   } data;

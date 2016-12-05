@@ -3,18 +3,21 @@ project(xbot_msgs)
 find_package(catkin REQUIRED COMPONENTS std_msgs actionlib_msgs message_generation)
 
 add_message_files(DIRECTORY msg
-                      FILES SensorState.msg
+                      FILES 
+                      SensorState.msg
                       DebugSensor.msg
                       BumperEvent.msg
                       CliffEvent.msg
                       RobotStateEvent.msg
                       PowerSystemEvent.msg
                       WheelDropEvent.msg
-                            ControllerInfo.msg
-                            DockInfraRed.msg
-                            KeyboardInput.msg
-                            MotorPower.msg
-                            ScanAngle.msg
+                      ControllerInfo.msg
+                      DockInfraRed.msg
+                      KeyboardInput.msg
+                      MotorPower.msg
+                      ScanAngle.msg
+                      XbotState.msg
+                      face_pose.msg
                  )
 
 add_action_files(DIRECTORY action

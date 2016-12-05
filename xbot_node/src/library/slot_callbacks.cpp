@@ -53,6 +53,7 @@ void XbotRos::processStreamData() {
   publishInertia();
   publishRawInertia();
   publishDebugSensors();
+  publishRobotState();
 
 }
 
@@ -63,6 +64,9 @@ void XbotRos::processStreamData() {
 void XbotRos::publishSensorState()
 {
   if ( ros::ok() ) {
+//      float heading = xbot.getHeading();
+
+//      ROS_ERROR("%f",heading);
     if (sensor_state_publisher.getNumSubscribers() > 0) {
       xbot_msgs::SensorState state;
       CoreSensors::Data data = xbot.getCoreSensorData();
@@ -83,7 +87,7 @@ void XbotRos::publishSensorState()
 void XbotRos::publishWheelState()
 {
 //     Take latest encoders and gyro data
-    ecl::Pose2D<double> pose_update;
+    ecl::LegacyPose2D<double> pose_update;
     ecl::linear_algebra::Vector3d pose_update_rates;
     xbot.updateOdometry(pose_update, pose_update_rates);
     float left_joint_pos,left_joint_vel,right_joint_pos,right_joint_vel;
@@ -120,6 +124,7 @@ void XbotRos::publishInertia()
 
       msg->orientation = tf::createQuaternionMsgFromRollPitchYaw(0.0, 0.0, xbot.getHeading());
 
+
       // set a non-zero covariance on unused dimensions (pitch and roll); this is a requirement of robot_pose_ekf
       // set yaw covariance as very low, to make it dominate over the odometry heading when combined
       // 1: fill once, as its always the same;  2: using an invented value; cannot we get a realistic estimation?
@@ -147,6 +152,7 @@ void XbotRos::publishRawInertia()
   {
     // Publish as shared pointer to leverage the nodelets' zero-copy pub/sub feature
     sensor_msgs::ImuPtr msg(new sensor_msgs::Imu);
+//    ImuSensors::Data imu_data_raw=xbot.getImuSensorData();
 
     ros::Time now = ros::Time::now();
     ros::Duration interval(0.01); // Time interval between each sensor reading.
@@ -166,7 +172,28 @@ void XbotRos::publishDebugSensors()
         msg->header.stamp = ros::Time::now();
         msg->data.push_back(data_debug.left_encoder);
         msg->data.push_back(data_debug.right_encoder);
+        msg->heading=xbot.getHeading();
         debug_sensors_publisher.publish(msg);
+
+    }
+
+}
+
+void XbotRos::publishRobotState()
+{
+    ros::Rate r(10);
+    if ( ros::ok() && (robot_state_publisher.getNumSubscribers() > 0) )
+    {
+        xbot_msgs::XbotStatePtr msg(new xbot_msgs::XbotState);
+        CoreSensors::Data data = xbot.getCoreSensorData();
+
+        msg->power = data.power_voltage;
+        msg->height_percent = xbot.getHeightPercent();
+        msg->platform_degree = xbot.getPlatformDegree();
+        msg->camera_degree = xbot.getCameraDegree();
+
+        robot_state_publisher.publish(msg);
+        r.sleep();
 
     }
 
