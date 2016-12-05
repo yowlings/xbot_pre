@@ -385,7 +385,7 @@ void Xbot::getWheelJointStates(float &wheel_left_angle, float &wheel_left_angle_
  * @param pose_update : return the pose updates in this variable.
  * @param pose_update_rates : return the pose update rates in this variable.
  */
-void Xbot::updateOdometry(ecl::Pose2D<double> &pose_update, ecl::linear_algebra::Vector3d &pose_update_rates)
+void Xbot::updateOdometry(ecl::LegacyPose2D<double> &pose_update, ecl::linear_algebra::Vector3d &pose_update_rates)
 {
   diff_drive.update(imu_sensors.data.timestamp, core_sensors.data.left_encoder, core_sensors.data.right_encoder,
                       pose_update, pose_update_rates);

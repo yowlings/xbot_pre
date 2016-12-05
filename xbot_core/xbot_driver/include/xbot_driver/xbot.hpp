@@ -137,7 +137,7 @@ public:
   **********************/
   void getWheelJointStates(float &wheel_left_angle, float &wheel_left_angle_rate,
                            float &wheel_right_angle, float &wheel_right_angle_rate);
-  void updateOdometry(ecl::Pose2D<double> &pose_update,
+  void updateOdometry(ecl::LegacyPose2D<double> &pose_update,
                       ecl::linear_algebra::Vector3d &pose_update_rates);
 
   /*********************
