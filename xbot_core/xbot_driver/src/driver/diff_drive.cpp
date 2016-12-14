@@ -85,10 +85,11 @@ void DiffDrive::update(const unsigned int &time_stamp,
 
   // TODO this line and the last statements are really ugly; refactor, put in another place
   pose_update = diff_drive_kinematics.forward((double)(tick_to_rad * left_diff_ticks), (double)(tick_to_rad * right_diff_ticks));
+//  std::cout<<"1"<<pose_update<<std::endl;
 
   if (curr_timestamp != last_timestamp)
   {
-    last_diff_time = (curr_timestamp - last_timestamp)/ 100000.0f;
+    last_diff_time = ((double)(short)((curr_timestamp - last_timestamp) & 0xffff)) / 1000000.0f;
     last_timestamp = curr_timestamp;
     last_velocity_left = (tick_to_rad * left_diff_ticks) / last_diff_time;
     last_velocity_right = (tick_to_rad * right_diff_ticks) / last_diff_time;
@@ -99,6 +100,7 @@ void DiffDrive::update(const unsigned int &time_stamp,
   pose_update_rates << pose_update.x()/last_diff_time,
                        pose_update.y()/last_diff_time,
                        pose_update.heading()/last_diff_time;
+//  std::cout<<"2"<<pose_update_rates<<std::endl;
   state_mutex.unlock();
 }
 
@@ -149,7 +151,7 @@ std::vector<float> DiffDrive::velocityCommands() {
   velocity_mutex.lock();
   std::vector<float> cmd(2);
   cmd[0] = linear_velocity;  // In [m/s]
-  cmd[1] = angular_velocity*180/ecl::pi; // In [rad/s]
+  cmd[1] = angular_velocity*180/ecl::pi; // In [degree/s]
   velocity_mutex.unlock();
   return cmd;
 }

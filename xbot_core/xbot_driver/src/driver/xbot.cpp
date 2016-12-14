@@ -169,6 +169,10 @@ void Xbot::spin()
   ecl::Duration timeout(0.1);
   unsigned char buf[256];
 
+
+//  int buf_size=0;
+
+
   /*********************
    ** Simulation Params
    **********************/
@@ -228,10 +232,14 @@ void Xbot::spin()
       //sig_debug.emit(ostream.str());
       // might be useful to send this to a topic if there is subscribers
     }
+//    buf_size+=n;
+
     bool find_packet = packet_finder.update(buf, n);
+
 
     if (find_packet) // this clears packet finder's buffer and transfers important bytes into it
     {
+
       PacketFinder::BufferType local_buffer;
       packet_finder.getBuffer(local_buffer); // get a reference to packet finder's buffer.
       sig_raw_data_stream.emit(local_buffer);
@@ -253,15 +261,18 @@ void Xbot::spin()
         {
           // these come with the streamed feedback
             case Header::CoreSensors:
-//            std::cout<<"come into core sensors"<<std::endl;
+//
+//            std::cout<<"come into core sensors"<<std::endl;                
                 if( !core_sensors.deserialise(data_buffer) )
                     { fixPayload(data_buffer); break; }
-                event_manager.update(core_sensors.data);
+                sig_stream_data.emit();
                 break;
             case Header::ImuSensors:
+//                sig_raw_data_stream.emit(local_buffer);
                 if( !imu_sensors.deserialise(data_buffer) )
                     { fixPayload(data_buffer);
                     break; }
+//                sig_stream_data.emit();
                 break;
 
             default: // in the case of unknown or mal-formed sub-payload
@@ -275,7 +286,7 @@ void Xbot::spin()
       is_alive = true;
       event_manager.update(is_connected, is_alive);
       last_signal_time.stamp();
-      sig_stream_data.emit();
+//      sig_stream_data.emit();
       sendBaseControlCommand(); // send the command packet to mainboard;
     }
     else

@@ -197,6 +197,7 @@ private:
   ecl::Serial serial;
   PacketFinder packet_finder;
   PacketFinder::BufferType data_buffer;
+  PacketFinder::BufferType buf_tmp;
   bool is_alive; // used as a flag set by the data stream watchdog
 
 

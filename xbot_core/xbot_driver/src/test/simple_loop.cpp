@@ -59,10 +59,10 @@ public:
 //    if (dx >= 1.0 && dth >= ecl::pi/2.0) { dx=0.0; dth=0.0; xbot.setBaseControl(0.0, 0.0); return; }
 //    else if (dx >= 1.0) { xbot.setBaseControl(0.0, 10.3); return; }
 //    else { xbot.setBaseControl(0.4, 0.0); return; }
-//      xbot.setBaseControl(0.0, 0.0);
+      xbot.setBaseControl(0.0, -1.1);
 //      xbot.setLiftControl(0);
 //      xbot.setPlatformCameraControl(10,20);
-      xbot.resetXbot();
+//      xbot.resetXbot();
       return;
   }
 

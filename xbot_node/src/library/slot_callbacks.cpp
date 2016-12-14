@@ -86,6 +86,7 @@ void XbotRos::publishSensorState()
 
 void XbotRos::publishWheelState()
 {
+
 //     Take latest encoders and gyro data
     ecl::Pose2D<double> pose_update;
     ecl::linear_algebra::Vector3d pose_update_rates;
@@ -93,7 +94,6 @@ void XbotRos::publishWheelState()
     float left_joint_pos,left_joint_vel,right_joint_pos,right_joint_vel;
     xbot.getWheelJointStates(left_joint_pos,left_joint_vel,right_joint_pos,right_joint_vel);  // right wheel
     joint_states.position[0]=(double)left_joint_pos;
-
     joint_states.velocity[0]=left_joint_vel;
     joint_states.position[1]=(double)right_joint_pos;
 //    ROS_ERROR_STREAM("jointstates.position[0]:" << right_joint_pos);
@@ -107,6 +107,7 @@ void XbotRos::publishWheelState()
     {
       joint_states.header.stamp = ros::Time::now();
       joint_state_publisher.publish(joint_states);
+
     }
 }
 
@@ -163,6 +164,7 @@ void XbotRos::publishRawInertia()
 
 void XbotRos::publishDebugSensors()
 {
+//    ros::Rate r(50);
     if ( ros::ok() && (debug_sensors_publisher.getNumSubscribers() > 0) )
     {
         xbot_msgs::DebugSensorPtr msg(new xbot_msgs::DebugSensor);
@@ -174,6 +176,7 @@ void XbotRos::publishDebugSensors()
         msg->data.push_back(data_debug.right_encoder);
         msg->heading=xbot.getHeading();
         debug_sensors_publisher.publish(msg);
+//        r.sleep();
 
     }
 

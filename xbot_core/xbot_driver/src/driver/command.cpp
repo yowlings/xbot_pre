@@ -49,7 +49,7 @@ Command Command::SetVelocityControl(const float &speed, const float &radius)
 {
   Command outgoing;
   outgoing.data.speed = speed;
-  outgoing.data.radius = -radius/1.230;
+  outgoing.data.radius = radius;
   outgoing.data.command = Command::BaseControl;
   return outgoing;
 }

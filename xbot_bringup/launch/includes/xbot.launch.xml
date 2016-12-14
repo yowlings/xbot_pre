@@ -4,8 +4,9 @@
 <launch>
   <arg name="serialport"/> <!-- TODO: use the serialport parameter to set the serial port of kobuki -->
 
+
   <node pkg="nodelet" type="nodelet" name="mobile_base_nodelet_manager" args="manager"/>
-  <node pkg="nodelet" type="nodelet" name="mobile_base" args="load xbot_node/XbotNodelet mobile_base_nodelet_manager">
+  <node pkg="nodelet" type="nodelet" name="mobile_base" args="load xbot_node/XbotNodelet mobile_base_nodelet_manager" >
     <rosparam file="$(find xbot_node)/param/base.yaml" command="load"/>
     <param name="device_port" value="$(arg serialport)" />
 

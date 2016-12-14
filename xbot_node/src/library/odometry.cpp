@@ -116,7 +116,7 @@ void Odometry::publishTransform(const geometry_msgs::Quaternion &odom_quat)
   odom_trans.header.stamp = ros::Time::now();
   odom_trans.transform.translation.x = pose.x();
   odom_trans.transform.translation.y = pose.y();
-  odom_trans.transform.translation.z = 0.2;
+  odom_trans.transform.translation.z = 0;
   odom_trans.transform.rotation = odom_quat;
   odom_broadcaster.sendTransform(odom_trans);
 }
@@ -135,7 +135,7 @@ void Odometry::publishOdometry(const geometry_msgs::Quaternion &odom_quat,
   // Position
   odom->pose.pose.position.x = pose.x();
   odom->pose.pose.position.y = pose.y();
-  odom->pose.pose.position.z = 0.2;
+  odom->pose.pose.position.z = 0.0;
   odom->pose.pose.orientation = odom_quat;
 
   // Velocity

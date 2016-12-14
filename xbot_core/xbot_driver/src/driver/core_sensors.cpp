@@ -13,7 +13,7 @@
 
 #include "../../include/xbot_driver/packets/core_sensors.hpp"
 #include "../../include/xbot_driver/packet_handler/payload_headers.hpp"
-
+#include <time.h>
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
@@ -92,7 +92,8 @@ bool CoreSensors::deserialise(ecl::PushAndPop<unsigned char> & byteStream)
   buildVariable(data.right_encoder, byteStream);
   buildVariable(data.up_encoder, byteStream);
 
-  std::cout<<"power:"<<data.power_voltage<<"|left_encoder:"<<data.left_encoder<<std::endl;
+  std::cout<<"time:"<<time(0)<<"|left_encoder:"<<data.left_encoder<<std::endl;
+
 
 //  std::cout<<"power:"<<data.power_voltage<<"|Echo1:"<<data.echo_1<<"|Echo2:"<<data.echo_2<<"|Echo3:"<<data.echo_3<<"|Echo4:"<<data.echo_4<<std::endl;
   return true;
