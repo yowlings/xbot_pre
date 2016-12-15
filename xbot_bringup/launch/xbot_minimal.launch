@@ -2,8 +2,6 @@
 	<!-- Xbot -->
 	<arg name="simulation"        default="false"   doc="set flags to indicate this turtle is run in simulation mode."/>
 	<arg name="serialport"        default="/dev/xbot"  doc="used by create to configure the port it is connected on [/dev/ttyUSB0, /dev/ttyS0]"/>
-	<!-- <arg name="base"              default="$(env TURTLEBOT_BASE)"         doc="mobile base type [create, roomba]"/> -->
-
 
 	<param name="/use_sim_time" value="$(arg simulation)"/>
 
@@ -12,7 +10,7 @@
 	<!-- Load the URDF/Xacro model of our robot -->
 
 
-	<arg name="urdf_file" default="$(find xacro)/xacro.py '$(find xbot)/urdf/Xbot.urdf.xacro'" />
+	<arg name="urdf_file" default="$(find xacro)/xacro.py '$(find xbot_bringup)/urdf/Xbot.urdf.xacro'" />
 	<param name="robot_description" command="$(arg urdf_file)" />
 
 	<!-- state publisher -->
