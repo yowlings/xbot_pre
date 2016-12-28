@@ -64,6 +64,7 @@
 #include <xbot_msgs/DebugSensor.h>
 #include <xbot_driver/xbot.hpp>
 #include <xbot_msgs/XbotState.h>
+#include <xbot_msgs/ImuNine.h>
 #include "odometry.hpp"
 
 /*****************************************************************************

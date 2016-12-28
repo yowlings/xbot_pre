@@ -10,13 +10,13 @@
 #   short_desc:     Short description (optional)
 
 subscribers:
-  - name:        "Safe reactive controller"
-    topic:       "input/safety_controller"
-    timeout:     0.2
-    priority:    10
   - name:        "Teleoperation"
     topic:       "input/teleop"
     timeout:     1.0
+    priority:    10
+  - name:        "Safe reactive controller"
+    topic:       "input/safety_controller"
+    timeout:     0.2
     priority:    9
   - name:        "ObstacleAvoid"
     topic:       "input/avoid"

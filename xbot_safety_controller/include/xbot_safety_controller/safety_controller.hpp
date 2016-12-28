@@ -82,7 +82,7 @@ public:
     right_echo_near(false),
     last_event_time_(ros::Time(0)),
     msg_(new geometry_msgs::Twist()){};
-  ~SafetyController(){};
+    ~SafetyController(){};
 
   /**
    * Set-up necessary publishers/subscribers and variables
@@ -96,7 +96,7 @@ public:
     time_to_extend_bump_cliff_events_ = ros::Duration(time_to_extend_bump_cliff_events);
 
     reset_safety_states_subscriber_ = nh_.subscribe("reset", 10, &SafetyController::resetSafetyStatesCB, this);
-    get_echo_data = nh_.subscribe("echo_data", 10, &SafetyController::dealEchoData, this);
+    get_echo_data = nh_.subscribe("sensor/echo_data", 10, &SafetyController::dealEchoData, this);
     velocity_command_publisher_ = nh_.advertise< geometry_msgs::Twist >("cmd_vel", 10);
     return true;
   };
@@ -139,20 +139,10 @@ private:
 
 void SafetyController::dealEchoData(const xbot_msgs::DockInfraRed msg)
 {
-    if(msg.data[0] == msg.NEAR_LEFT)
-    {
-        left_echo_near = true;
-    }
+    left_echo_near = msg.left_near;
+    center_echo_near = msg.center_near;
+    right_echo_near = msg.right_near;
 
-    if(msg.data[1] == msg.NEAR_CENTER)
-    {
-        center_echo_near = true;
-    }
-
-    if(msg.data[2] == msg.NEAR_RIGHT)
-    {
-        right_echo_near = true;
-    }
 
 }
 
@@ -194,6 +184,7 @@ void SafetyController::spin()
   {
     if (left_echo_near || center_echo_near || right_echo_near)
     {
+      ROS_ERROR("false-if");
       msg_.reset(new geometry_msgs::Twist());
       msg_->linear.x = 0.0;
       msg_->linear.y = 0.0;
@@ -203,10 +194,10 @@ void SafetyController::spin()
       msg_->angular.z = 0.0;
       velocity_command_publisher_.publish(msg_);
     }
-    else if (time_to_extend_bump_cliff_events_ > ros::Duration(1e-10) &&
-         ros::Time::now() - last_event_time_ < time_to_extend_bump_cliff_events_) {
-      velocity_command_publisher_.publish(msg_);
-    }
+//    else if (time_to_extend_bump_cliff_events_ > ros::Duration(1e-10) &&
+//         ros::Time::now() - last_event_time_ < time_to_extend_bump_cliff_events_) {
+//      /*velocity_command_publisher_.publish(msg_);*/
+//    }
 
   }
 };

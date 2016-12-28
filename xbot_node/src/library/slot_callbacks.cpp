@@ -152,13 +152,18 @@ void XbotRos::publishRawInertia()
   if ( ros::ok() && (raw_imu_data_publisher.getNumSubscribers() > 0) )
   {
     // Publish as shared pointer to leverage the nodelets' zero-copy pub/sub feature
-    sensor_msgs::ImuPtr msg(new sensor_msgs::Imu);
-//    ImuSensors::Data imu_data_raw=xbot.getImuSensorData();
+    xbot_msgs::ImuNinePtr msg(new xbot_msgs::ImuNine);
+    msg->accex = xbot.getImuSensorData().acce_x;
+    msg->gyrox = xbot.getImuSensorData().gyro_x;
+    msg->magx = xbot.getImuSensorData().mag_x;
+    msg->accey = xbot.getImuSensorData().acce_y;
+    msg->gyroy = xbot.getImuSensorData().gyro_y;
+    msg->magy = xbot.getImuSensorData().mag_y;
+    msg->accez = xbot.getImuSensorData().acce_z;
+    msg->gyroz = xbot.getImuSensorData().gyro_z;
+    msg->magz = xbot.getImuSensorData().mag_z;
 
-    ros::Time now = ros::Time::now();
-    ros::Duration interval(0.01); // Time interval between each sensor reading.
-    const double digit_to_dps = 0.00875; // digit to deg/s ratio, comes from datasheet of 3d gyro[L3G4200D].
-//    unsigned int length = data.followed_data_length/3;
+    raw_imu_data_publisher.publish(msg);
   }
 }
 
@@ -217,27 +222,27 @@ void XbotRos::publishDockIRData()
 
             if((data_echo.echo_1>0.1)&&(data_echo.echo_1<0.2))
             {
-                msg->data.push_back(1);
+                msg->left_near = true;
             }
             else
             {
-                msg->data.push_back(16);
+                msg->left_near = false;
             }
             if((data_echo.echo_2>0.1)&&(data_echo.echo_2<0.2))
             {
-                msg->data.push_back(2);
+                msg->center_near = true;
             }
             else
             {
-                msg->data.push_back(8);
+                msg->center_near = false;
             }
             if((data_echo.echo_3>0.1)&&(data_echo.echo_3<0.2))
             {
-                msg->data.push_back(4);
+               msg->right_near = true;
             }
             else
             {
-                msg->data.push_back(32);
+                msg->right_near = false;
             }
 
 

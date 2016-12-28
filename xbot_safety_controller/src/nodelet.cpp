@@ -88,6 +88,7 @@ private:
     {
       controller_->spin();
       spin_rate.sleep();
+//      ROS_ERROR("into spin");
     }
   }
 
