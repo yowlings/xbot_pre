@@ -1,7 +1,6 @@
 # xbot
 This is the xbot bringup ROS package and xbot driver.
-Before u using the package, please decompress file ecl.tar.gz to the path: /opt/ros/indigo/include
---
+Before u use the package, please decompress file ecl.tar.gz to the path: /opt/ros/indigo/include.
 ![image](https://github.com/yowlings/xbot/blob/master/xbot_0.png)
 ![image](https://github.com/yowlings/xbot/blob/master/IMG_1663.JPG)
 ![image](https://github.com/yowlings/xbot/blob/master/IMG_1665.JPG)
