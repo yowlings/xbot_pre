@@ -46,7 +46,7 @@
 #include <ecl/sigslots.hpp>
 #include <ecl/exceptions.hpp>
 #include <ecl/linear_algebra.hpp>
-#include <ecl/geometry/pose2d.hpp>
+#include <ecl/geometry/legacy_pose2d.hpp>
 #include "xbot_driver/xbot.hpp"
 
 /*****************************************************************************
@@ -80,11 +80,11 @@ public:
   /*********************
    ** Accessor
    **********************/
-  ecl::Pose2D<double> getPose();
+  ecl::LegacyPose2D<double> getPose();
 
 private:
   float vx, wz;
-  ecl::Pose2D<double> pose;
+  ecl::LegacyPose2D<double> pose;
   xbot::Xbot xbot;
   ecl::Slot<> slot_stream_data;
 
@@ -356,7 +356,7 @@ void XbotManager::resetVelocity()
 }
 
 void XbotManager::processStreamData() {
-  ecl::Pose2D<double> pose_update;
+  ecl::LegacyPose2D<double> pose_update;
   ecl::linear_algebra::Vector3d pose_update_rates;
   xbot.updateOdometry(pose_update, pose_update_rates);
   pose *= pose_update;
@@ -369,7 +369,7 @@ void XbotManager::processStreamData() {
   xbot.setBaseControl(vx, wz);
 }
 
-ecl::Pose2D<double> XbotManager::getPose() {
+ecl::LegacyPose2D<double> XbotManager::getPose() {
   return pose;
 }
 
@@ -395,7 +395,7 @@ int main(int argc, char** argv)
   xbot_manager.init();
 
   ecl::Sleep sleep(1);
-  ecl::Pose2D<double> pose;
+  ecl::LegacyPose2D<double> pose;
   try {
     while (!shutdown_req){
       sleep();
