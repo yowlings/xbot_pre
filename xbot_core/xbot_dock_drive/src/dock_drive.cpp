@@ -114,9 +114,9 @@ void DockDrive::modeShift(const std::string& mode)
 void DockDrive::update(const std::vector<unsigned char> &signal
                 , const unsigned char &bumper
                 , const unsigned char &charger
-                , const ecl::LegacyPose2D<double>& pose) {
+                , const ecl::Pose2D<double>& pose) {
 
-  ecl::LegacyPose2D<double> pose_update;
+  ecl::Pose2D<double> pose_update;
   std::vector<unsigned char> signal_filt(signal.size(), 0);
   std::string debug_str;
 
@@ -145,7 +145,7 @@ void DockDrive::update(const std::vector<unsigned char> &signal
  * @param pose update. this variable get filled after this function 
  * @param pose - current pose
  **/
-void DockDrive::computePoseUpdate(ecl::LegacyPose2D<double>& pose_update, const ecl::LegacyPose2D<double>& pose)
+void DockDrive::computePoseUpdate(ecl::Pose2D<double>& pose_update, const ecl::Pose2D<double>& pose)
 {
   double dx = pose.x() - pose_priv.x();
   double dy = pose.y() - pose_priv.y();
@@ -235,7 +235,7 @@ void DockDrive::processBumpChargeEvent(const unsigned char& bumper, const unsign
  * @param pose_update
  *
  *************************/
-void DockDrive::updateVelocity(const std::vector<unsigned char>& signal_filt, const ecl::LegacyPose2D<double>& pose_update, std::string& debug_str)
+void DockDrive::updateVelocity(const std::vector<unsigned char>& signal_filt, const ecl::Pose2D<double>& pose_update, std::string& debug_str)
 {
   std::ostringstream oss;
   RobotDockingState::State current_state, new_state;

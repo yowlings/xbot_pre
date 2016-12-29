@@ -13,7 +13,7 @@
 #include <csignal>
 #include <ecl/time.hpp>
 #include <ecl/sigslots.hpp>
-#include <ecl/geometry/legacy_pose2d.hpp>
+#include <ecl/geometry/pose2d.hpp>
 #include <ecl/linear_algebra.hpp>
 #include "xbot_driver/xbot.hpp"
 
@@ -42,7 +42,7 @@ public:
   }
 
   void processStreamData() {
-    ecl::LegacyPose2D<double> pose_update;
+    ecl::Pose2D<double> pose_update;
     ecl::linear_algebra::Vector3d pose_update_rates;
     xbot.updateOdometry(pose_update, pose_update_rates);
     pose *= pose_update;
@@ -66,13 +66,13 @@ public:
       return;
   }
 
-  ecl::LegacyPose2D<double> getPose() {
+  ecl::Pose2D<double> getPose() {
     return pose;
   }
 
 private:
   double dx, dth;
-  ecl::LegacyPose2D<double> pose;
+  ecl::Pose2D<double> pose;
   xbot::Xbot xbot;
   ecl::Slot<> slot_stream_data;
 };
@@ -100,7 +100,7 @@ int main(int argc, char** argv)
 
 
   ecl::Sleep sleep(1);
-  ecl::LegacyPose2D<double> pose;
+  ecl::Pose2D<double> pose;
   try {
     while (!shutdown_req){
       sleep();

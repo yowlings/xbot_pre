@@ -88,7 +88,7 @@ void XbotRos::publishWheelState()
 {
 
 //     Take latest encoders and gyro data
-    ecl::LegacyPose2D<double> pose_update;
+    ecl::Pose2D<double> pose_update;
     ecl::linear_algebra::Vector3d pose_update_rates;
     xbot.updateOdometry(pose_update, pose_update_rates);
     float left_joint_pos,left_joint_vel,right_joint_pos,right_joint_vel;
