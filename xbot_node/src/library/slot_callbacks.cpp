@@ -220,7 +220,7 @@ void XbotRos::publishDockIRData()
             msg->header.frame_id = "dock_ir_link";
             msg->header.stamp = ros::Time::now();
 
-            if((data_echo.echo_1>0.1)&&(data_echo.echo_1<0.2))
+            if(data_echo.echo_1<0.1)
             {
                 msg->left_near = true;
             }
@@ -228,7 +228,7 @@ void XbotRos::publishDockIRData()
             {
                 msg->left_near = false;
             }
-            if((data_echo.echo_2>0.1)&&(data_echo.echo_2<0.2))
+            if(data_echo.echo_2<0.1)
             {
                 msg->center_near = true;
             }
@@ -236,7 +236,7 @@ void XbotRos::publishDockIRData()
             {
                 msg->center_near = false;
             }
-            if((data_echo.echo_3>0.1)&&(data_echo.echo_3<0.2))
+            if(data_echo.echo_3<0.1)
             {
                msg->right_near = true;
             }
