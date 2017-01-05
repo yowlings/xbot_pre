@@ -44,7 +44,7 @@
 
 
 
-  <link name="rplidar">
+  <link name="laser">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
@@ -53,10 +53,10 @@
       <material name="gray"/>
     </visual>
   </link>
-  <joint name="base_to_rplidar" type="fixed">
+  <joint name="base_to_laser" type="fixed">
     <axis rpy="0 0 0" xyz="1 0 0"/>
     <parent link="base_link"/>
-    <child link="rplidar"/>
+    <child link="laser"/>
     <origin rpy="0 0 0" xyz="0.14 0 0.06"/>
   </joint>
 
