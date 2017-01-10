@@ -45,7 +45,7 @@
 	</node>
 
 	<!-- Laserscan topic -->
-	<arg name="scan_processing" default="true"/>
+	<arg name="scan_processing" default="false"/>
 	<arg name="scan_height"      default="200"/>
 	<!-- Factory-calibrated depth registration -->
 	<arg name="camera"      default="camera"/>
