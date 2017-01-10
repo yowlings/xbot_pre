@@ -26,16 +26,17 @@
 
 
 
+	<arg name="asus_topic" value="/asus_scan" />
+
 	<!--sensor asus depth camera-->
 	<include file="$(find xbot_bringup)/launch/includes/sensor.launch">
 	<arg name="rgb_processing" default="false" />
 	<arg name="depth_registration" default="false" />
 	<arg name="depth_processing" default="false" />
-	<arg name="scan_topic" default="/asus_scan" />
+	<arg name="scan_topic" value="$(arg asus_topic)" />
 	<arg name = "3d_sensor" value = "asus_xtion_pro"/>
 	</include>
 
-	<arg name="asus_topic" value="/asus_scan" />
 
 	<node pkg="rplidar_python" type="rplidar_scan.py" name="rplidar" output="screen" respawn="true">
 		<param name="frame_id" value="laser" />
@@ -43,24 +44,6 @@
 		<param name="range_max" value="6.0"/>
 		<param name="scan_topic" value="/rplidar_scan" />
 	</node>
-
-	<!-- Laserscan topic -->
-	<arg name="scan_processing" default="false"/>
-	<arg name="scan_height"      default="200"/>
-	<!-- Factory-calibrated depth registration -->
-	<arg name="camera"      default="camera"/>
-	<!--Laserscan-->
-	<group if="$(arg scan_processing)">
-		<node pkg="nodelet" type="nodelet" name="depthimage_to_laserscan" args="load depthimage_to_laserscan/DepthImageToLaserScanNodelet $(arg camera)/$(arg camera)_nodelet_manager">
-			<param name="scan_height" value="$(arg scan_height)" />
-			<param name="output_frame_id" value="/$(arg camera)_depth_frame"/>
-			<param name="range_min" value="0.2"/>
-			<remap from="image" to="$(arg camera)/depth_registered/image_raw"/>
-			<remap from="scan" to="$(arg asus_topic)"/>
-			<remap from="$(arg camera)/image" to="$(arg camera)/depth_registered/image_raw"/>
-			<remap from="$(arg camera)/scan" to="$(arg asus_topic)"/>
-		</node>
-	</group>
 
 	<include file="$(find nav_staff)/launch/xml/data_fusion.launch.xml">
 		<arg name = 'use_rplidar_topic'      value = '/rplidar_scan' />
