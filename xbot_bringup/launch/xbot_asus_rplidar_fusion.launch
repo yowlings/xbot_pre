@@ -35,11 +35,13 @@
 	<arg name = "3d_sensor" value = "asus_xtion_pro"/>
 	</include>
 
+	<arg name="asus_topic" value="/asus_scan" />
+
 	<node pkg="rplidar_python" type="rplidar_scan.py" name="rplidar" output="screen" respawn="true">
 		<param name="frame_id" value="laser" />
 		<param name="range_min" value="0.15"/>
 		<param name="range_max" value="6.0"/>
-		<param name="scan_topic" value="rplidar_scan" />
+		<param name="scan_topic" value="/rplidar_scan" />
 	</node>
 
 	<!-- Laserscan topic -->
