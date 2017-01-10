@@ -24,4 +24,8 @@
 	<param name="sim" value="true"/>
 	</include>
 
+	<!-- sensor rpliar -->
+	<include file="$(find rplidar_python)/launch/rplidar_demo.launch" />
+
+
 </launch>
