@@ -9,6 +9,4 @@ uint8 FAR_CENTER  =  8
 uint8 FAR_RIGHT   = 32
 
 Header header
-bool left_near
-bool center_near
-bool right_near
+bool danger

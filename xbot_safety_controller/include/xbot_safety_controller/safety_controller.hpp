@@ -77,9 +77,6 @@ public:
     Controller(),
     nh_(nh),
     name_(name),
-    left_echo_near(false),
-    center_echo_near(false),
-    right_echo_near(false),
     last_event_time_(ros::Time(0)),
     msg_(new geometry_msgs::Twist()){};
     ~SafetyController(){};
@@ -114,7 +111,7 @@ private:
   ros::Subscriber reset_safety_states_subscriber_;
   ros::Publisher controller_state_publisher_, velocity_command_publisher_;
   ros::Time last_event_time_;
-  bool left_echo_near, center_echo_near, right_echo_near;
+  bool danger;
 
   ros::Duration time_to_extend_bump_cliff_events_;
 
@@ -139,9 +136,7 @@ private:
 
 void SafetyController::dealEchoData(const xbot_msgs::DockInfraRed msg)
 {
-    left_echo_near = msg.left_near;
-    center_echo_near = msg.center_near;
-    right_echo_near = msg.right_near;
+    danger = msg.danger;
 
 
 }
@@ -182,7 +177,7 @@ void SafetyController::spin()
 {
   if (this->getState())
   {
-    if (left_echo_near || center_echo_near || right_echo_near)
+    if (danger)
     {
       ROS_ERROR("false-if");
       msg_.reset(new geometry_msgs::Twist());
