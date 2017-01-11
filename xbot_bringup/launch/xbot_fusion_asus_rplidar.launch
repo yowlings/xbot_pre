@@ -38,25 +38,7 @@
 	</include>
 
 
-	<node pkg="rplidar_python" type="rplidar_scan.py" name="rplidar" output="screen" respawn="true">
-		<param name="frame_id" value="laser" />
-		<param name="range_min" value="0.15"/>
-		<param name="range_max" value="6.0"/>
-		<param name="scan_topic" value="/rplidar_scan" />
-	</node>
 
-	<include file="$(find nav_staff)/launch/xml/data_fusion.launch.xml">
-		<arg name = 'use_rplidar_topic'      value = '/rplidar_scan' />
-		<arg name = 'use_asus_topic'         value = '/asus_scan' />
-		<arg name = 'scan_topic'             value = '/scan' />
-
-		<arg name = 'target_frame'           value= 'laser' />
-		<arg name = 'source_frame'           value= 'camera_depth_frame' />
-		<arg name = 'fusion_data_frame'      value= 'global_scan' />
-
-		<arg name = 'PublishFrequency'       value= '0.016' />
-		<arg name = 'asus_max_range'         value= '4.0' />
-	</include>
 
 
 </launch>
