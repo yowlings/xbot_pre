@@ -27,6 +27,8 @@
 	<!-- rplidar sensor -->
 	<include file="$(find rplidar_python)/launch/rplidar.launch.xml">
 		<arg name="rplidar_frame"  value="/laser" />
+		<remap from="rplidar_scan" to="/scan" />
+
 	</include>
 
 
