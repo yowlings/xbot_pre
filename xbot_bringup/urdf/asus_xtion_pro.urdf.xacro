@@ -1,14 +1,17 @@
 <?xml version="1.0"?>
 <robot name="sensor_asus_xtion_pro" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find turtlebot_description)/urdf/turtlebot_gazebo.urdf.xacro"/>
-  <xacro:include filename="$(find turtlebot_description)/urdf/turtlebot_properties.urdf.xacro"/>
+  <xacro:include filename="$(find xbot_bringup)/urdf/common_properties.urdf.xacro"/>
   
   <!-- Xacro properties -->
   <xacro:property name="M_SCALE" value="0.001"/>
   <xacro:property name="asus_xtion_pro_cam_py" value="0.0205"/>
   <xacro:property name="asus_xtion_pro_depth_rel_rgb_py" value="0.0270" />
   <xacro:property name="asus_xtion_pro_cam_rel_rgb_py"   value="-0.0220" />
-
+  <xacro:property name="cam_px" value="0" />
+  <xacro:property name="cam_pz" value="0" />
+  <xacro:property name="cam_or" value="0" />
+  <xacro:property name="cam_op" value="0" />
+  <xacro:property name="cam_oy" value="0" />
   <!-- Parameterised in part by the values in turtlebot_properties.urdf.xacro -->
   <xacro:macro name="sensor_asus_xtion_pro" params="parent">
     <joint name="camera_rgb_joint" type="fixed">
@@ -36,7 +39,7 @@
       <visual>
         <origin xyz="-0.015 0.0035 0.004" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://turtlebot_description/meshes/sensors/xtion_pro_camera.dae"/>
+          <mesh filename="package://xbot_bringup/meshes/sensors/xtion_pro_camera.dae"/>
         </geometry>
       </visual>
       <collision>
@@ -74,7 +77,7 @@
 
     <!-- Asus mount -->
     <joint name="mount_asus_xtion_pro_joint" type="fixed">
-      <origin xyz="-0.1024 0.0 0.272" rpy="0 0 0"/>
+      <origin xyz="-0.02 0.0 -0.03" rpy="0 0 0"/>
       <parent link="${parent}"/>
       <child link="mount_asus_xtion_pro_link"/>
     </joint>  
@@ -82,7 +85,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="${-M_PI/2} 0 0"/>
         <geometry>
-          <mesh filename="package://turtlebot_description/meshes/sensors/xtion_pro_stack.dae"/>
+          <mesh filename="package://xbot_bringup/meshes/sensors/xtion_pro_stack.dae"/>
         </geometry>
       </visual>  
       <collision>
