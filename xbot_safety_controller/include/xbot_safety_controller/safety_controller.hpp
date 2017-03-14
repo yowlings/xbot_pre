@@ -136,7 +136,7 @@ private:
 
 void SafetyController::dealEchoData(const xbot_msgs::DockInfraRed msg)
 {
-    danger = msg.danger;
+    danger = msg.left||msg.right||msg.center;
 
 
 }

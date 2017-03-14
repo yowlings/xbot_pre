@@ -219,7 +219,10 @@ void XbotRos::publishDockIRData()
             CoreSensors::Data data_echo = xbot.getCoreSensorData();
             msg->header.frame_id = "dock_ir_link";
             msg->header.stamp = ros::Time::now();
-            msg->danger = ((data_echo.echo_1<=0.07)||data_echo.echo_2<=0.2||data_echo.echo_3<=0.07);
+            msg->left=(data_echo.echo_1<=0.07)?1:8;
+            msg->center=(data_echo.echo_2<=0.2)?2:16;
+            msg->right=(data_echo.echo_3<=0.07)?4:32;
+//            msg->danger = ((data_echo.echo_1<=0.07)||data_echo.echo_2<=0.2||data_echo.echo_3<=0.07);
             ROS_ERROR("echo_left:%f|echo_center:%f|echo_right:%f",data_echo.echo_1,data_echo.echo_2,data_echo.echo_3);
             dock_ir_publisher.publish(msg);
         }
