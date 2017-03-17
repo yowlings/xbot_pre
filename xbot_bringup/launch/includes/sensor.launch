@@ -2,7 +2,7 @@
 <launch>
  <arg name="camera" default="camera"/>
  <arg name="publish_tf" default="false"/>
- <arg name="3d_sensor" default="kinect"/>
+ <arg name="3d_sensor" default="asus_xtion_pro"/>
 
  <!-- Factory-calibrated depth registration -->
  <arg name="depth_registration" default="true"/>
@@ -22,7 +22,7 @@
  <arg name="num_worker_threads" default="4" />
 
  <!-- Laserscan topic -->
- <arg name="scan_topic" default="scan"/>
+ <arg name="scan_topic" default="asus_scan"/>
 
  <include file="$(find xbot_bringup)/launch/includes/$(arg 3d_sensor).launch.xml">
   <arg name="camera" value="$(arg camera)"/>
