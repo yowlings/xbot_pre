@@ -376,7 +376,7 @@ void Xbot::resetOdometry()
   diff_drive.reset();
 
   // Issue #274: use current imu reading as zero heading to emulate reseting gyro
-  heading_offset = (static_cast<float>(imu_sensors.data.yaw) / 100.0) * ecl::pi / 180.0;
+  heading_offset = (static_cast<float>(imu_sensors.data.yaw) / 10.0) * ecl::pi / 180.0;
 }
 
 void Xbot::getWheelJointStates(float &wheel_left_angle, float &wheel_left_angle_rate, float &wheel_right_angle,

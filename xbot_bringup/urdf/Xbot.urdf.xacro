@@ -3,7 +3,7 @@
     - Base      : xbot
     - Stacks    : hexagons
     - 3d Sensor : kinect
--->    
+-->
 <robot name="xbot" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:include filename="./Xbot_base_rplidar.urdf" />

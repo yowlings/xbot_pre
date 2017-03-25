@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="sensor_asus_xtion_pro" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find xbot_bringup)/urdf/common_properties.urdf.xacro"/>
-  
+
   <!-- Xacro properties -->
   <xacro:property name="M_SCALE" value="0.001"/>
   <xacro:property name="asus_xtion_pro_cam_py" value="0.0205"/>
@@ -30,7 +30,7 @@
     <link name="camera_rgb_optical_frame"/>
 
     <joint name="camera_joint" type="fixed">
-      <origin xyz="0 ${asus_xtion_pro_cam_rel_rgb_py} 0" 
+      <origin xyz="0 ${asus_xtion_pro_cam_rel_rgb_py} 0"
               rpy="0 0 0"/>
       <parent link="camera_rgb_frame"/>
       <child link="camera_link"/>
@@ -80,14 +80,14 @@
       <origin xyz="-0.02 0.0 -0.03" rpy="0 0 0"/>
       <parent link="${parent}"/>
       <child link="mount_asus_xtion_pro_link"/>
-    </joint>  
+    </joint>
     <link name="mount_asus_xtion_pro_link">
       <visual>
         <origin xyz="0 0 0" rpy="${-M_PI/2} 0 0"/>
         <geometry>
           <mesh filename="package://xbot_bringup/meshes/sensors/xtion_pro_stack.dae"/>
         </geometry>
-      </visual>  
+      </visual>
       <collision>
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
         <geometry>
