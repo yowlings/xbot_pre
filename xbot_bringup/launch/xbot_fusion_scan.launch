@@ -1,0 +1,38 @@
+<launch>
+	<!-- Xbot -->
+	<arg name="simulation"        default="false"   doc="set flags to indicate this turtle is run in simulation mode."/>
+	<arg name="serialport"        default="/dev/xbot"  doc="used by create to configure the port it is connected on [/dev/ttyUSB0, /dev/ttyS0]"/>
+
+	<param name="/use_sim_time" value="$(arg simulation)"/>
+
+
+
+	<!-- Load the URDF/Xacro model of our robot -->
+
+
+	<arg name="urdf_file" default="$(find xacro)/xacro.py '$(find xbot_bringup)/urdf/Xbot.urdf.xacro'" />
+	<param name="robot_description" command="$(arg urdf_file)" />
+
+	<!-- state publisher -->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+	<param name="publish_frequency" type="double" value="20.0" />
+	</node>
+
+	<!-- xbot driver -->
+	<include file="$(find xbot_bringup)/launch/includes/xbot.launch.xml">
+	<arg name="serialport" value="$(arg serialport)" />
+	<param name="sim" value="true"/>
+	</include>
+
+
+
+	<!--sensor asus depth camera-->
+	<include file="$(find xbot_bringup)/launch/includes/asus_fusion.launch">
+	<arg name="rgb_processing" default="false" />
+	<arg name="depth_registration" default="false" />
+	<arg name="depth_processing" default="false" />
+	<arg name="scan_topic" default="/asus_scan" />
+	<arg name = "3d_sensor" value = "asus_xtion_pro"/>
+	</include>
+
+</launch>
