@@ -29,7 +29,7 @@ xbot_node is the bridge between xbot_driver and ROS. In this package, all the re
 ## xbot_safety_controller
 For controlling xbot safely by using echo sensor and collison detect sensor that whenever and whatever case xbot in, xbot will not run into the obstacle.
 
-## xbot_bringup
+# Usage
 There is three way to launch the xbot.
 ### xbot_rplidar.launch
 >roslaunch xbot_bringup xbot_rplidar.launch
