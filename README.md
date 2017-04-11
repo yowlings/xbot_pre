@@ -1,27 +1,45 @@
 # Overview
-Xbot is a double wheeled mobile robot which is suitable for most of common sensors and hardware such as Microsoft's Kinect and Asus' Xtion Pro and RPlidar. Users can easily integrate their own customized hardware and applications to the development platform by using ROS and the related series tutorials. For more details about xbot robot, please visit [http://wiki.ros.org/Robots/Xbot?distro=indigo](http://wiki.ros.org/Robots/Xbot?distro=indigo)
+Xbot is a double wheeled mobile robot which is suitable for most of common sensors and hardware such as Microsoft's Kinect and Asus' Xtion Pro and RPlidar. Users can easily integrate their own customized hardware and applications to the development platform by using ROS and the related series tutorials. For more details about xbot robot, please visit [http://robots.ros.org/xbot/](http://robots.ros.org/xbot/)
 
 ![image](https://github.com/yowlings/xbot/blob/master/xbot.png)
 
 # Packages
-This package is a much simple version of xbot bringup package which can drive the xbot moving and publish some necessary messages. The xbot driver subscribes the cmd_vel message to know how to move, but it has not enough functions to promote xbot move safely. Just for your reference.
+This git repo contains 7 ROS packages for making up a complete xbot ROS bringup. They are xbot_driver, xbot_dock_drive, xbot_ftdi, xbot_keyop, xbot_msgs,xbot_node and xbot_safety_controller.
 
 ## xbot_driver
+xbot_driver is the basic package of xbot_bringup. It provides the serial communication with the xbot move base including get sensors data and post the command data from navigation algorithms. 
+There ars some test tools such as simple_keyop for you to debug your driver program. You can test if the received data is as expected or transfer the move command to see if it is moving as what you want.
+xbot_driver is also a pure c++ program which means that you can run it as a c++ program or you can choose the ROS way to execute it.
 
-## xbot_core
-Including the xbot_driver and xbot_ftdi, the second package is for creating the serial port in name xbot. The first package is the original driver of xbot, learn how to use and modify it by yourself.
+## xbot_dock_drive
+xbot_dock_drive is a dock driving library for xbot. Users owning a docking station for xbot can use this tool to develop autonomous docking drive algorithms.
 
-## xbot_driver
-The serial port communication driver in python.
+##xbot_ftdi
+Some tools for PC installation. You have to create the port rule that mapping xbot port to "xbot", so in any time you plug in xbot your computer will show "xbot" port is online.
+
+##xbot_keyop
+The package for teleoperate xbot in your computer. Just follow the direction info once the program launched and shown in screen.
 
 ## xbot_msgs
-The necessary messages that xbot publishes and subscribes.
+All of the message types that xbot publishes and subscribes. You can define your own message types in this package.
 
 ## xbot_node
-Like kobuki_node
+xbot_node is the bridge between xbot_driver and ROS. In this package, all the related subscribed topics and published topics is defined and realised. 
 
 ## xbot_safety_controller
-Like kobuki_safety_controller
+For controlling xbot safely by using echo sensor and collison detect sensor that whenever and whatever case xbot in, xbot will not run into the obstacle.
 
 ## xbot_bringup
-Yes, as the name, launch the xbot_minimal.launch in your ROS.
+There is three way to launch the xbot.
+### xbot_rplidar.launch
+>roslaunch xbot_bringup xbot_rplidar.launch
+
+Driving xbot with only rplidar sensor.
+### xbot_asus.launch
+>roslaunch xbot_bringup xbot_asus.launch
+
+Driving xbot with only asus camera.
+### xbot_rplidar_asus.launch
+>roslaunch xbot_bringup xbot_rplidar_asus.launch
+
+Driving xbot with both rplidar sensor and asus camera.
