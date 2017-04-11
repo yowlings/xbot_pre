@@ -14,10 +14,10 @@ xbot_driver is also a pure c++ program which means that you can run it as a c++ 
 ## xbot_dock_drive
 xbot_dock_drive is a dock driving library for xbot. Users owning a docking station for xbot can use this tool to develop autonomous docking drive algorithms.
 
-##xbot_ftdi
+## xbot_ftdi
 Some tools for PC installation. You have to create the port rule that mapping xbot port to "xbot", so in any time you plug in xbot your computer will show "xbot" port is online.
 
-##xbot_keyop
+## xbot_keyop
 The package for teleoperate xbot in your computer. Just follow the direction info once the program launched and shown in screen.
 
 ## xbot_msgs
