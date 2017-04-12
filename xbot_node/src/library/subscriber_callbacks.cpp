@@ -58,7 +58,7 @@ void XbotRos::subscribeVelocityCommand(const geometry_msgs::TwistConstPtr msg)
     // should be global frame and require a transform
     //double vx = msg->linear.x;        // in (m/s)
     //double wz = msg->angular.z;       // in (rad/s)
-    ROS_ERROR_STREAM("Xbot : velocity command received [" << msg->linear.x << "],[" << msg->angular.z << "]");
+//    ROS_ERROR_STREAM("Xbot : velocity command received [" << msg->linear.x << "],[" << msg->angular.z << "]");
     xbot.setBaseControl(msg->linear.x, msg->angular.z);
     odometry.resetTimeout();
   }
