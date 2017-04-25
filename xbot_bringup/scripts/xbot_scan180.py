@@ -27,7 +27,7 @@ class xbot_scan180():
 
     def scan_dataCB(self, scan_data):
         scan_data.ranges = list(scan_data.ranges)
-        for i in xrange(360):
+        for i in xrange(len(scan_data.ranges)):
             if i < 90 or i >= 270:
                 scan_data.ranges[i] = float('inf')
         scan_data.ranges = tuple(scan_data.ranges)
