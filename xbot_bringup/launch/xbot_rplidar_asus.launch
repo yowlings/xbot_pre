@@ -45,7 +45,5 @@
 		<remap from="scan"          to="rplidar_scan"/>
 	</node>
 
-	<!-- reduce scan  from 360 to 180 -->
-	<node name="scan180"          pkg="xbot_bringup"  type="xbot_scan180.py" output="screen"  />
 
 </launch>
