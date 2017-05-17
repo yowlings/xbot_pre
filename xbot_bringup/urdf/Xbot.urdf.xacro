@@ -6,7 +6,7 @@
 -->
 <robot name="xbot" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:include filename="./Xbot_base_rplidar.urdf" />
+  <xacro:include filename="./xbot_new.urdf" />
   <xbot/>
   <sensor_asus_xtion_pro          parent="camera_platform"/>
 </robot>
