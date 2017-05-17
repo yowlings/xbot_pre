@@ -1,8 +1,0 @@
-<library path="lib/libxbot_safety_controller_nodelet">
-  <class name="xbot_safety_controller/SafetyControllerNodelet" type="xbot::SafetyControllerNodelet" base_class_type="nodelet::Nodelet">
-    <description>
-      Nodelet for Xbot's safety controller
-    </description>
-  </class>
-</library>
-

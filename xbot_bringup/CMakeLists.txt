@@ -14,11 +14,11 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
 )
 
-add_message_files(
-   DIRECTORY msg
-   FILES
+# add_message_files(
+#    DIRECTORY msg
+#    FILES
 
-)
+# )
 
 
 ## Generate added messages and services with any dependencies listed here
