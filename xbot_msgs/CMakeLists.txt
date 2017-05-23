@@ -19,6 +19,7 @@ add_message_files(DIRECTORY msg
                       XbotState.msg
                       face_pose.msg
                       ImuNine.msg
+                      NaviState.msg
                  )
 
 add_action_files(DIRECTORY action

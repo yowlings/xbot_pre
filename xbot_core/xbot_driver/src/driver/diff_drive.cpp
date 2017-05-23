@@ -89,7 +89,7 @@ void DiffDrive::update(const unsigned int &time_stamp,
 
   if (curr_timestamp != last_timestamp)
   {
-    last_diff_time = ((double)(short)((curr_timestamp - last_timestamp) & 0xffff)) / 1000000.0f;
+    last_diff_time =0.02;//((double)(short)((curr_timestamp - last_timestamp) & 0xffff)) / 1000000.0f;
     last_timestamp = curr_timestamp;
     last_velocity_left = (tick_to_rad * left_diff_ticks) / last_diff_time;
     last_velocity_right = (tick_to_rad * right_diff_ticks) / last_diff_time;
