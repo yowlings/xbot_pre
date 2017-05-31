@@ -43,4 +43,3 @@ Driving xbot with only asus camera.
 >roslaunch xbot_bringup xbot_rplidar_asus.launch
 
 Driving xbot with both rplidar sensor and asus camera.
-xbot2
