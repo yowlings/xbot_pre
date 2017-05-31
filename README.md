@@ -4,18 +4,12 @@ Xbot is a double wheeled mobile robot which is suitable for most of common senso
 ![image](https://github.com/yowlings/xbot/blob/master/xbot.png)
 
 # Packages
-This git repo contains 7 ROS packages for making up a complete xbot ROS bringup. They are xbot_driver, xbot_dock_drive, xbot_ftdi, xbot_keyop, xbot_msgs,xbot_node and xbot_safety_controller.
+This git repo contains 4 ROS packages for making up a complete xbot ROS bringup. They are xbot_driver, xbot_dock_drive, xbot_ftdi, xbot_keyop, xbot_msgs,xbot_node and xbot_safety_controller.
 
 ## xbot_driver
 xbot_driver is the basic package of xbot_bringup. It provides the serial communication with the xbot move base including get sensors data and post the command data from navigation algorithms. 
 There ars some test tools such as simple_keyop for you to debug your driver program. You can test if the received data is as expected or transfer the move command to see if it is moving as what you want.
 xbot_driver is also a pure c++ program which means that you can run it as a c++ program or you can choose the ROS way to execute it.
-
-## xbot_dock_drive
-xbot_dock_drive is a dock driving library for xbot. Users owning a docking station for xbot can use this tool to develop autonomous docking drive algorithms.
-
-## xbot_ftdi
-Some tools for PC installation. You have to create the port rule that mapping xbot port to "xbot", so in any time you plug in xbot your computer will show "xbot" port is online.
 
 ## xbot_keyop
 The package for teleoperate xbot in your computer. Just follow the direction info once the program launched and shown in screen.
@@ -25,9 +19,6 @@ All of the message types that xbot publishes and subscribes. You can define your
 
 ## xbot_node
 xbot_node is the bridge between xbot_driver and ROS. In this package, all the related subscribed topics and published topics is defined and realised. 
-
-## xbot_safety_controller
-For controlling xbot safely by using echo sensor and collison detect sensor that whenever and whatever case xbot in, xbot will not run into the obstacle.
 
 # Usage
 There are three ways to launch the xbot.
