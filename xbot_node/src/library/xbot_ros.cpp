@@ -59,11 +59,7 @@ namespace xbot
  */
 XbotRos::XbotRos(std::string& node_name) :
     name(node_name), cmd_vel_timed_out_(false), serial_timed_out_(false),
-    slot_controller_info(&XbotRos::publishControllerInfo, *this),
-    slot_stream_data(&XbotRos::processStreamData, *this),
-    slot_raw_data_command(&XbotRos::publishRawDataCommand, *this),
-    slot_raw_data_stream(&XbotRos::publishRawDataStream, *this),
-    slot_raw_control_command(&XbotRos::publishRawControlCommand, *this)
+    slot_stream_data(&XbotRos::processStreamData, *this)
 {
 
 
@@ -90,20 +86,12 @@ bool XbotRos::init(ros::NodeHandle& nh)
    ** Slots
    **********************/
   slot_stream_data.connect(name + std::string("/stream_data"));
-  slot_controller_info.connect(name + std::string("/controller_info"));
-  slot_raw_data_command.connect(name + std::string("/raw_data_command"));
-  slot_raw_data_stream.connect(name + std::string("/raw_data_stream"));
-  slot_raw_control_command.connect(name + std::string("/raw_control_command"));
-
   /*********************
    ** Driver Parameters
    **********************/
   Parameters parameters;
 
   nh.param("acceleration_limiter", parameters.enable_acceleration_limiter, false);
-  nh.param("battery_capacity", parameters.battery_capacity, Battery::capacity);
-  nh.param("battery_low", parameters.battery_low, Battery::low);
-  nh.param("battery_dangerous", parameters.battery_dangerous, Battery::dangerous);
 
   parameters.sigslots_namespace = name; // name is automatically picked up by device_nodelet parent.
   if (!nh.getParam("device_port", parameters.device_port))
@@ -284,16 +272,12 @@ void XbotRos::advertiseTopics(ros::NodeHandle& nh)
 
   /*********************
   ** Xbot Esoterics
-  **********************/
-  controller_info_publisher = nh.advertise < xbot_msgs::ControllerInfo > ("controller_info",  100, true); // latched publisher
-  power_event_publisher  = nh.advertise < xbot_msgs::PowerSystemEvent > ("events/power_system", 100);
-  robot_event_publisher  = nh.advertise < xbot_msgs::RobotStateEvent > ("events/robot_state", 100, true); // also latched
+  **********************/  
   sensor_state_publisher = nh.advertise < xbot_msgs::SensorState > ("sensors/core", 100);
   dock_ir_publisher = nh.advertise < xbot_msgs::DockInfraRed > ("sensors/dock_ir", 100);
+  echo_data_publisher = nh.advertise < xbot_msgs::Echos > ("sensors/echo", 100);
   imu_data_publisher = nh.advertise < sensor_msgs::Imu > ("sensors/imu_data", 100);
   raw_imu_data_publisher = nh.advertise < xbot_msgs::ImuNine > ("sensors/imu_data_raw", 100);
-  raw_data_command_publisher = nh.advertise< std_msgs::String > ("debug/raw_data_command", 100);
-  raw_data_stream_publisher = nh.advertise< std_msgs::String > ("debug/raw_data_stream", 100);
   raw_control_command_publisher = nh.advertise< std_msgs::Int16MultiArray > ("debug/raw_control_command", 100);
 
   debug_sensors_publisher = nh.advertise < xbot_msgs::DebugSensor> ("debug/sensors_data",100);
@@ -308,8 +292,6 @@ void XbotRos::subscribeTopics(ros::NodeHandle& nh)
 {
   velocity_command_subscriber = nh.subscribe(std::string("commands/velocity"), 10, &XbotRos::subscribeVelocityCommand, this);
   reset_odometry_subscriber = nh.subscribe("commands/reset_odometry", 10, &XbotRos::subscribeResetOdometry, this);
-  motor_power_subscriber = nh.subscribe("commands/motor_power", 10, &XbotRos::subscribeMotorPower, this);
-  controller_info_command_subscriber =  nh.subscribe(std::string("commands/controller_info"), 10, &XbotRos::subscribeControllerInfoCommand, this);
   motor_control_subscriber = nh.subscribe("commands/other_motors", 10, &XbotRos::subscribeMotorControlCommand, this);
 }
 

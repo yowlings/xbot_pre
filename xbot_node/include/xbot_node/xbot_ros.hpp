@@ -55,13 +55,10 @@
 #include <sensor_msgs/JointState.h>
 #include <sensor_msgs/Imu.h>
 #include <ecl/sigslots.hpp>
-#include <xbot_msgs/ControllerInfo.h>
 #include <xbot_msgs/DockInfraRed.h>
-#include <xbot_msgs/MotorPower.h>
-#include <xbot_msgs/PowerSystemEvent.h>
-#include <xbot_msgs/RobotStateEvent.h>
 #include <xbot_msgs/SensorState.h>
 #include <xbot_msgs/DebugSensor.h>
+#include <xbot_msgs/Echos.h>
 #include <xbot_driver/xbot.hpp>
 #include <xbot_msgs/XbotState.h>
 #include <xbot_msgs/ImuNine.h>
@@ -96,17 +93,19 @@ private:
   /*********************
    ** Ros Comms
    **********************/
-  ros::Publisher controller_info_publisher;
-  ros::Publisher imu_data_publisher, sensor_state_publisher, joint_state_publisher, dock_ir_publisher, raw_imu_data_publisher;
-  ros::Publisher robot_event_publisher;
-  ros::Publisher power_event_publisher;
-  ros::Publisher raw_data_command_publisher, raw_data_stream_publisher, raw_control_command_publisher;
+  ros::Publisher imu_data_publisher;
+  ros::Publisher raw_imu_data_publisher;
+  ros::Publisher sensor_state_publisher;
+  ros::Publisher joint_state_publisher;
+  ros::Publisher dock_ir_publisher;
+  ros::Publisher echo_data_publisher;
+  ros::Publisher raw_control_command_publisher;
 
-  ros::Publisher debug_sensors_publisher, robot_state_publisher;
+  ros::Publisher debug_sensors_publisher;
+  ros::Publisher robot_state_publisher;
 
   ros::Subscriber velocity_command_subscriber;
-  ros::Subscriber controller_info_command_subscriber;
-  ros::Subscriber motor_power_subscriber, reset_odometry_subscriber;
+  ros::Subscriber reset_odometry_subscriber;
   ros::Subscriber motor_control_subscriber;
 
   void advertiseTopics(ros::NodeHandle& nh);
@@ -117,18 +116,12 @@ private:
   **********************/
   void subscribeVelocityCommand(const geometry_msgs::TwistConstPtr);
   void subscribeResetOdometry(const std_msgs::EmptyConstPtr);
-  void subscribeMotorPower(const xbot_msgs::MotorPowerConstPtr msg);
-  void subscribeControllerInfoCommand(const xbot_msgs::ControllerInfoConstPtr msg);
   void subscribeMotorControlCommand(const xbot_msgs::XbotState msg);
 
   /*********************
    ** SigSlots
    **********************/
   ecl::Slot<> slot_stream_data;
-  ecl::Slot<> slot_controller_info;
-  ecl::Slot<Command::Buffer&> slot_raw_data_command;
-  ecl::Slot<PacketFinder::BufferType&> slot_raw_data_stream;
-  ecl::Slot<const std::vector<short>&> slot_raw_control_command;
 
   /*********************
    ** Slot Callbacks
@@ -139,16 +132,11 @@ private:
   void publishRawInertia();
   void publishSensorState();
   void publishDockIRData();
-  void publishControllerInfo();
-
+  void publishEchoData();
   void publishDebugSensors();
   void publishRobotState();
 
 
-
-  void publishRawDataCommand(Command::Buffer &buffer);
-  void publishRawDataStream(PacketFinder::BufferType &buffer);
-  void publishRawControlCommand(const std::vector<short> &velocity_commands);
 
 };
 

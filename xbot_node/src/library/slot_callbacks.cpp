@@ -50,6 +50,7 @@ void XbotRos::processStreamData() {
   publishWheelState();
   publishSensorState();
   publishDockIRData();
+  publishEchoData();
   publishInertia();
   publishRawInertia();
   publishDebugSensors();
@@ -70,14 +71,18 @@ void XbotRos::publishSensorState()
     if (sensor_state_publisher.getNumSubscribers() > 0) {
       xbot_msgs::SensorState state;
       CoreSensors::Data data = xbot.getCoreSensorData();
-      state.header.stamp = ros::Time::now();
-      state.left_encoder = data.left_encoder;
-      state.right_encoder = data.right_encoder;
-      state.charger = data.charger;
-      state.battery = data.battery;
-
-
-
+      state.time_stamp = data.timestamp;
+      state.battery_voltage = data.battery_voltage;
+      state.front_left_encoder = data.front_left_encoder;
+      state.front_right_encoder = data.front_right_encoder;
+      state.rear_left_encoder = data.rear_left_encoder;
+      state.rear_right_encoder = data.rear_right_encoder;
+      state.up_down_encoder = data.up_down_encoder;
+      state.up_down_current = data.up_down_current;
+      state.front_left_current = data.front_left_current;
+      state.front_right_current = data.front_right_current;
+      state.rear_left_current = data.rear_left_current;
+      state.rear_right_current = data.rear_right_current;
 
       sensor_state_publisher.publish(state);
     }
@@ -153,15 +158,15 @@ void XbotRos::publishRawInertia()
   {
     // Publish as shared pointer to leverage the nodelets' zero-copy pub/sub feature
     xbot_msgs::ImuNinePtr msg(new xbot_msgs::ImuNine);
-    msg->accex = xbot.getImuSensorData().acce_x;
-    msg->gyrox = xbot.getImuSensorData().gyro_x;
-    msg->magx = xbot.getImuSensorData().mag_x;
-    msg->accey = xbot.getImuSensorData().acce_y;
-    msg->gyroy = xbot.getImuSensorData().gyro_y;
-    msg->magy = xbot.getImuSensorData().mag_y;
-    msg->accez = xbot.getImuSensorData().acce_z;
-    msg->gyroz = xbot.getImuSensorData().gyro_z;
-    msg->magz = xbot.getImuSensorData().mag_z;
+    msg->accex = xbot.getCoreSensorData().acce_x;
+    msg->gyrox = xbot.getCoreSensorData().gyro_x;
+    msg->magx = xbot.getCoreSensorData().mag_x;
+    msg->accey = xbot.getCoreSensorData().acce_y;
+    msg->gyroy = xbot.getCoreSensorData().gyro_y;
+    msg->magy = xbot.getCoreSensorData().mag_y;
+    msg->accez = xbot.getCoreSensorData().acce_z;
+    msg->gyroz = xbot.getCoreSensorData().gyro_z;
+    msg->magz = xbot.getCoreSensorData().mag_z;
 
     raw_imu_data_publisher.publish(msg);
   }
@@ -177,8 +182,8 @@ void XbotRos::publishDebugSensors()
 
         msg->header.frame_id = "encoder";
         msg->header.stamp = ros::Time::now();
-        msg->data.push_back(data_debug.left_encoder);
-        msg->data.push_back(data_debug.right_encoder);
+        msg->data.push_back(data_debug.front_left_encoder);
+        msg->data.push_back(data_debug.front_right_encoder);
         msg->heading=xbot.getHeading();
         debug_sensors_publisher.publish(msg);
 //        r.sleep();
@@ -195,11 +200,9 @@ void XbotRos::publishRobotState()
         xbot_msgs::XbotStatePtr msg(new xbot_msgs::XbotState);
         CoreSensors::Data data = xbot.getCoreSensorData();
 
-        msg->power = data.power_voltage;
         msg->height_percent = xbot.getHeightPercent();
         msg->platform_degree = xbot.getPlatformDegree();
         msg->camera_degree = xbot.getCameraDegree();
-
         robot_state_publisher.publish(msg);
         r.sleep();
 
@@ -216,137 +219,38 @@ void XbotRos::publishDockIRData()
 
             // Publish as shared pointer to leverage the nodelets' zero-copy pub/sub feature
             xbot_msgs::DockInfraRedPtr msg(new xbot_msgs::DockInfraRed);
-            CoreSensors::Data data_echo = xbot.getCoreSensorData();
+            CoreSensors::Data data_infred = xbot.getCoreSensorData();
             msg->header.frame_id = "dock_ir_link";
             msg->header.stamp = ros::Time::now();
-            msg->left=(data_echo.echo_1<=0.07)?1:8;
-            msg->center=(data_echo.echo_2<=0.2)?2:16;
-            msg->right=(data_echo.echo_3<=0.07)?4:32;
-//            msg->danger = ((data_echo.echo_1<=0.07)||data_echo.echo_2<=0.2||data_echo.echo_3<=0.07);
-            ROS_ERROR("echo_left:%f|echo_center:%f|echo_right:%f",data_echo.echo_1,data_echo.echo_2,data_echo.echo_3);
+            msg->rear_left_infred=(data_infred.front_left_echo<=0.07)?1:8;
+            msg->rear_center_infred=(data_infred.front_center_echo<=0.2)?2:16;
+            msg->rear_right_infred=(data_infred.front_right_echo<=0.07)?4:32;
             dock_ir_publisher.publish(msg);
         }
     }
 }
 
-/*****************************************************************************
-** Non Default Stream Packets
-*****************************************************************************/
-/**
- * @brief Publish fw, hw, sw version information.
- *
- * The driver will only gather this data when initialising so it is
- * important that this publisher is latched.
- */
-
-void XbotRos::publishControllerInfo()
+void XbotRos::publishEchoData()
 {
-  if (ros::ok())
+  if(ros::ok())
   {
-    xbot_msgs::ControllerInfoPtr msg(new xbot_msgs::ControllerInfo);
-
-
-    controller_info_publisher.publish(msg);
-  }
-}
-
-/*****************************************************************************
-** Events
-*****************************************************************************/
-
-
-
-
-
-
-
-
-/**
- * @brief Prints the raw data stream to a publisher.
- *
- * This is a lazy publisher, it only publishes if someone is listening. It publishes the
- * hex byte values of the raw data commands. Useful for debugging command to protocol
- * byte packets to the firmware.
- *
- * The signal which calls this
- * function is sending a copy of the buffer (don't worry about mutexes). Be ideal if we used
- * const PacketFinder::BufferType here, but haven't updated PushPop to work with consts yet.
- *
- * @param buffer
- */
-void XbotRos::publishRawDataCommand(Command::Buffer &buffer)
-{
-  if ( raw_data_command_publisher.getNumSubscribers() > 0 ) { // do not do string processing if there is no-one listening.
-    std::ostringstream ostream;
-    Command::Buffer::Formatter format;
-    ostream << format(buffer); // convert to an easily readable hex string.
-    std_msgs::String s;
-    s.data = ostream.str();
-    if (ros::ok())
+    if(echo_data_publisher.getNumSubscribers()>0)
     {
-      raw_data_command_publisher.publish(s);
+      xbot_msgs::EchosPtr msg(new xbot_msgs::Echos());
+      CoreSensors::Data data_echo = xbot.getCoreSensorData();
+      msg->header.frame_id = "echo_link";
+      msg->header.stamp = ros::Time::now();
+      int near_left = (data_echo.front_left_echo<=0.07)?1:0;
+      int near_center = (data_echo.front_center_echo<=0.2)?2:0;
+      int near_right = (data_echo.front_right_echo<=0.07)?4:0;
+      msg->near = near_left+near_center+near_right;
+      echo_data_publisher.publish(msg);
+
     }
   }
-}
-/**
- * @brief Prints the raw data stream to a publisher.
- *
- * This is a lazy publisher, it only publishes if someone is listening. It publishes the
- * hex byte values of the raw data (incoming) stream. Useful for checking when bytes get
- * mangled.
- *
- * The signal which calls this
- * function is sending a copy of the buffer (don't worry about mutexes). Be ideal if we used
- * const PacketFinder::BufferType here, but haven't updated PushPop to work with consts yet.
- *
- * @param buffer
- */
-void XbotRos::publishRawDataStream(PacketFinder::BufferType &buffer)
-{
-  if ( raw_data_stream_publisher.getNumSubscribers() > 0 ) { // do not do string processing if there is no-one listening.
-    /*std::cout << "size: [" << buffer.size() << "], asize: [" << buffer.asize() << "]" << std::endl;
-    std::cout << "leader: " << buffer.leader << ", follower: " << buffer.follower  << std::endl;
-    {
-      std::ostringstream ostream;
-      PacketFinder::BufferType::Formatter format;
-      ostream << format(buffer); // convert to an easily readable hex string.
-      //std::cout << ostream.str() << std::endl;
-      std_msgs::String s;
-      s.data = ostream.str();
-      if (ros::ok())
-      {
-        raw_data_stream_publisher.publish(s);
-      }
-    }*/
-    {
-      std::ostringstream ostream;
-      ostream << "{ " ;
-      ostream << std::setfill('0') << std::uppercase;
-      for (unsigned int i=0; i < buffer.size(); i++)
-          ostream << std::hex << std::setw(2) << static_cast<unsigned int>(buffer[i]) << " " << std::dec;
-      ostream << "}";
-      //std::cout << ostream.str() << std::endl;
-      std_msgs::StringPtr msg(new std_msgs::String);
-      msg->data = ostream.str();
-      if (ros::ok())
-      {
-        raw_data_stream_publisher.publish(msg);
-      }
-    }
-  }
-}
 
-void XbotRos::publishRawControlCommand(const std::vector<short> &velocity_commands)
-{
-  if ( raw_control_command_publisher.getNumSubscribers() > 0 ) {
-    std_msgs::Int16MultiArrayPtr msg(new std_msgs::Int16MultiArray);
-    msg->data = velocity_commands;
-    if (ros::ok())
-    {
-      raw_control_command_publisher.publish(msg);
-    }
-  }
-  return;
+
+
 }
 
 } // namespace xbot

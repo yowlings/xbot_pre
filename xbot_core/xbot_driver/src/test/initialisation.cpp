@@ -25,10 +25,6 @@ public:
     parameters.enable_acceleration_limiter = false;
     // If your battery levels are showing significant variance from factory defaults, adjust thresholds.
     // This will affect the led on the front of the robot as well as when signals are emitted by the driver.
-    parameters.battery_capacity = 16.5;
-    parameters.battery_low = 14.0;
-    parameters.battery_dangerous = 13.2;
-
     // initialise - it will throw an exception if parameter validation or initialisation fails.
     try {
       xbot.init(parameters);

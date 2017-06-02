@@ -95,40 +95,12 @@ void XbotRos::subscribeResetOdometry(const std_msgs::EmptyConstPtr /* msg */)
   return;
 }
 
-void XbotRos::subscribeMotorPower(const xbot_msgs::MotorPowerConstPtr msg)
-{
-  if (msg->state == xbot_msgs::MotorPower::ON)
-  {
-    ROS_INFO_STREAM("Xbot : Firing up the motors. [" << name << "]");
-    xbot.enable();
-    odometry.resetTimeout();
-  }
-  else if (msg->state == xbot_msgs::MotorPower::OFF)
-  {
-    xbot.disable();
-    ROS_INFO_STREAM("Xbot : Shutting down the motors. [" << name << "]");
-    odometry.resetTimeout();
-  }
-  else
-  {
-    ROS_ERROR_STREAM("Xbot : Motor power command specifies unknown state '" << (unsigned int)msg->state
-                     << "'. [" << name << "]");
-  }
-}
-
 void XbotRos::subscribeMotorControlCommand(const xbot_msgs::XbotState msg)
 {
     xbot.setLiftControl(msg.height_percent);
     xbot.setPlatformCameraControl(msg.platform_degree, msg.camera_degree);
 }
 
-void XbotRos::subscribeControllerInfoCommand(const xbot_msgs::ControllerInfoConstPtr msg)
-{
-  if( msg->p_gain < 0.0f ||  msg->i_gain < 0.0f ||  msg->d_gain < 0.0f) {
-    ROS_ERROR_STREAM("Xbot : All controller gains should be positive. [" << name << "]");
-    return;
-  }
-  return;
-}
+
 
 } // namespace xbot

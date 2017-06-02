@@ -18,7 +18,6 @@
  *****************************************************************************/
 
 #include <string>
-#include "modules/battery.hpp"
 
 /*****************************************************************************
  ** Namespaces
@@ -41,9 +40,6 @@ public:
     sigslots_namespace("/xbot"),
     simulation(false),
     enable_acceleration_limiter(true),
-    battery_capacity(Battery::capacity),
-    battery_low(Battery::low),
-    battery_dangerous(Battery::dangerous),
     linear_acceleration_limit(0.3),
     linear_deceleration_limit(-0.3*1.2),
     angular_acceleration_limit(3.5),
@@ -55,9 +51,6 @@ public:
   std::string sigslots_namespace;  /**< @brief The first part of a sigslot connection namespace ["/xbot"] **/
   bool simulation;                 /**< @brief Whether to put the motors in loopback mode or not [false] **/
   bool enable_acceleration_limiter;/**< @brief Enable or disable the acceleration limiter [true] **/
-  double battery_capacity;         /**< @brief Capacity voltage of the battery [16.5V] **/ /* defaults defined in battery.cpp */
-  double battery_low;              /**< @brief Threshold for battery level warnings [14.0V] **/  /* defaults defined in battery.cpp */
-  double battery_dangerous;        /**< @brief Threshold for battery level in danger of depletion [13.2V] **/  /* defaults defined in battery.cpp */
 
   double linear_acceleration_limit;
   double linear_deceleration_limit;

@@ -82,21 +82,17 @@ void Xbot::init(Parameters &parameters) throw (ecl::StandardException)
   }
   this->parameters = parameters;
   std::string sigslots_namespace = parameters.sigslots_namespace;
-  event_manager.init(sigslots_namespace);
 
   // connect signals
-  sig_controller_info.connect(sigslots_namespace + std::string("/controller_info"));
   sig_stream_data.connect(sigslots_namespace + std::string("/stream_data"));
   sig_raw_data_command.connect(sigslots_namespace + std::string("/raw_data_command"));
   sig_raw_data_stream.connect(sigslots_namespace + std::string("/raw_data_stream"));
-  sig_raw_control_command.connect(sigslots_namespace + std::string("/raw_control_command"));
   //sig_serial_timeout.connect(sigslots_namespace+std::string("/serial_timeout"));
 
   sig_debug.connect(sigslots_namespace + std::string("/ros_debug"));
   sig_info.connect(sigslots_namespace + std::string("/ros_info"));
   sig_warn.connect(sigslots_namespace + std::string("/ros_warn"));
   sig_error.connect(sigslots_namespace + std::string("/ros_error"));
-  sig_named.connect(sigslots_namespace + std::string("/ros_named"));
 
   try {
     serial.open(parameters.device_port, ecl::BaudRate_115200, ecl::DataBits_8, ecl::StopBits_1, ecl::NoParity);  // this will throw exceptions - NotFoundError, OpenError
@@ -119,10 +115,6 @@ void Xbot::init(Parameters &parameters) throw (ecl::StandardException)
   packet_finder.configure(sigslots_namespace, stx, etx, 1, 256, 1, true);
   acceleration_limiter.init(parameters.enable_acceleration_limiter);
 
-  // in case the user changed these from the defaults
-  Battery::capacity = parameters.battery_capacity;
-  Battery::low = parameters.battery_low;
-  Battery::dangerous = parameters.battery_dangerous;
 
 
   thread.start(&Xbot::spin, *this);
@@ -189,7 +181,6 @@ void Xbot::spin()
         sig_info.emit("device is connected.");
         is_connected = true;
         serial.block(4000); // blocks by default, but just to be clear!
-        event_manager.update(is_connected, is_alive);
       }
       catch (const ecl::StandardException &e)
       {
@@ -221,7 +212,6 @@ void Xbot::spin()
         is_alive = false;
         sig_debug.emit("Timed out while waiting for incoming bytes.");
       }
-      event_manager.update(is_connected, is_alive);
       continue;
     }
     else
@@ -257,34 +247,15 @@ void Xbot::spin()
 //        std::cout << "remains: " << data_buffer.size() << " | ";
 //        std::cout << "local_buffer: " << local_buffer.size() << " | ";
 //        std::cout << std::endl;
-        switch (data_buffer[0])
-        {
-          // these come with the streamed feedback
-            case Header::CoreSensors:
-//
-//            std::cout<<"come into core sensors"<<std::endl;                
-                if( !core_sensors.deserialise(data_buffer) )
-                    { fixPayload(data_buffer); break; }
-                sig_stream_data.emit();
-                break;
-            case Header::ImuSensors:
-//                sig_raw_data_stream.emit(local_buffer);
-                if( !imu_sensors.deserialise(data_buffer) )
-                    { fixPayload(data_buffer);
-                    break; }
-//                sig_stream_data.emit();
-                break;
+          if( !core_sensors.deserialise(data_buffer) )
+              { fixPayload(data_buffer); break; }
+          sig_stream_data.emit();
 
-            default: // in the case of unknown or mal-formed sub-payload
-                fixPayload(data_buffer);
-                break;
-        }
       }
       //std::cout << "---" << std::endl;
       unlockDataAccess();
 
       is_alive = true;
-      event_manager.update(is_connected, is_alive);
       last_signal_time.stamp();
 //      sig_stream_data.emit();
       sendBaseControlCommand(); // send the command packet to mainboard;
@@ -351,12 +322,12 @@ float Xbot::getHeading() const
 
 int Xbot::getDebugSensors() const
 {
-    return (static_cast<int>(core_sensors.data.left_encoder));
+    return (static_cast<int>(core_sensors.data.front_left_encoder));
 }
 float Xbot::getAngularVelocity() const
 {
   // raw data angles are in hundredths of a degree, convert to radians.
-  return (static_cast<float>(imu_sensors.data.yaw) / 10.0) * ecl::pi / 180.0;
+  return (static_cast<float>(core_sensors.data.yaw) / 10.0) * ecl::pi / 180.0;
 }
 
 
@@ -376,7 +347,7 @@ void Xbot::resetOdometry()
   diff_drive.reset();
 
   // Issue #274: use current imu reading as zero heading to emulate reseting gyro
-  heading_offset = (static_cast<float>(imu_sensors.data.yaw) / 10.0) * ecl::pi / 180.0;
+  heading_offset = (static_cast<float>(core_sensors.data.yaw) / 10.0) * ecl::pi / 180.0;
 }
 
 void Xbot::getWheelJointStates(float &wheel_left_angle, float &wheel_left_angle_rate, float &wheel_right_angle,
@@ -398,7 +369,7 @@ void Xbot::getWheelJointStates(float &wheel_left_angle, float &wheel_left_angle_
  */
 void Xbot::updateOdometry(ecl::Pose2D<double> &pose_update, ecl::linear_algebra::Vector3d &pose_update_rates)
 {
-  diff_drive.update(imu_sensors.data.timestamp, core_sensors.data.left_encoder, core_sensors.data.right_encoder,
+  diff_drive.update(core_sensors.data.timestamp, core_sensors.data.front_left_encoder, core_sensors.data.front_right_encoder,
                       pose_update, pose_update_rates);
 }
 

@@ -45,7 +45,7 @@ public:
    */
   void processStreamData() {
     xbot::CoreSensors::Data data = xbot.getCoreSensorData();
-    std::cout << "Encoders [" <<  data.left_encoder << "," << data.right_encoder << "]" << std::endl;
+    std::cout << "Encoders [" <<  data.front_left_encoder << "," << data.front_right_encoder << "]" << std::endl;
   }
 
 private:

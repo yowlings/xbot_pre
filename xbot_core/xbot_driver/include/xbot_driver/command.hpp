@@ -19,7 +19,6 @@
 
 #include <ecl/containers.hpp>
 #include "packet_handler/payload_base.hpp"
-#include "modules/led_array.hpp"
 #include "modules.hpp"
 #include "macros.hpp"
 

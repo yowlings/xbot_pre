@@ -57,42 +57,60 @@ bool CoreSensors::deserialise(ecl::PushAndPop<unsigned char> & byteStream)
 //    return false;
 //  }
 
-  unsigned char header_id;
-  buildVariable(header_id, byteStream);
 //  std::cout<<"header_id:"<<(unsigned int)header_id<<std::endl;
-
-  if( header_id != Header::CoreSensors ) return false;
   unsigned char power_num;
   buildVariable(power_num, byteStream);
 //  std::cout<<"power_num:"<<(unsigned int)power_num<<std::endl;
 
-  build_special_variable(data.power_voltage,byteStream);
+  build_special_variable(data.battery_voltage,byteStream);
 //  std::cout<<"power_voltage:"<<data.power_voltage<<std::endl;
   unsigned char infred_num;
   buildVariable(infred_num, byteStream);
-  buildVariable(data.infred_1,byteStream);
-  buildVariable(data.infred_2,byteStream);
+  buildVariable(data.rear_left_infred,byteStream);
+  buildVariable(data.rear_center_infred,byteStream);
+  buildVariable(data.rear_right_infred,byteStream);
 
   unsigned char current_num;
   buildVariable(current_num,byteStream);
-  build_special_variable(data.current_1,byteStream);
-  build_special_variable(data.current_2,byteStream);
-  build_special_variable(data.current_3,byteStream);
+  build_special_variable(data.front_left_current,byteStream);
+  build_special_variable(data.front_right_current,byteStream);
+  build_special_variable(data.rear_left_current,byteStream);
+  build_special_variable(data.rear_right_current,byteStream);
+  build_special_variable(data.up_down_current,byteStream);
 
   unsigned char echo_num;
   buildVariable(echo_num,byteStream);
-  build_special_variable(data.echo_1,byteStream);
-  build_special_variable(data.echo_2,byteStream);
-  build_special_variable(data.echo_3,byteStream);
-  build_special_variable(data.echo_4,byteStream);
+  build_special_variable(data.front_left_echo,byteStream);
+  build_special_variable(data.front_center_echo,byteStream);
+  build_special_variable(data.front_right_echo,byteStream);
 
   unsigned char encoder_num;
   buildVariable(encoder_num, byteStream);
-  buildVariable(data.left_encoder, byteStream);
-  buildVariable(data.right_encoder, byteStream);
-  buildVariable(data.up_encoder, byteStream);
+  buildVariable(data.front_left_encoder, byteStream);
+  buildVariable(data.front_right_encoder, byteStream);
+  buildVariable(data.rear_left_encoder, byteStream);
+  buildVariable(data.rear_right_encoder, byteStream);
+  buildVariable(data.up_down_encoder, byteStream);
 
-  std::cout<<"time:"<<time(0)<<"|left_encoder:"<<data.left_encoder<<std::endl;
+  unsigned char imu_num;
+  buildVariable(imu_num, byteStream);
+  buildVariable(data.acce_x, byteStream);
+  buildVariable(data.acce_y, byteStream);
+  buildVariable(data.acce_z, byteStream);
+  buildVariable(data.gyro_x, byteStream);
+  buildVariable(data.gyro_y, byteStream);
+  buildVariable(data.gyro_z, byteStream);
+  buildVariable(data.mag_x, byteStream);
+  buildVariable(data.mag_y, byteStream);
+  buildVariable(data.mag_z, byteStream);
+  buildVariable(data.pressure, byteStream);
+  buildVariable(data.yaw,byteStream);
+  buildVariable(data.pitch, byteStream);
+  buildVariable(data.roll, byteStream);
+  buildVariable(data.timestamp, byteStream);
+
+
+//  std::cout<<"time:"<<time(0)<<"|left_encoder:"<<data.left_encoder<<std::endl;
 
 
 //  std::cout<<"power:"<<data.power_voltage<<"|Echo1:"<<data.echo_1<<"|Echo2:"<<data.echo_2<<"|Echo3:"<<data.echo_3<<"|Echo4:"<<data.echo_4<<std::endl;

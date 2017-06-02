@@ -6,19 +6,12 @@ add_message_files(DIRECTORY msg
                       FILES 
                       SensorState.msg
                       DebugSensor.msg
-                      BumperEvent.msg
-                      CliffEvent.msg
-                      RobotStateEvent.msg
-                      PowerSystemEvent.msg
-                      WheelDropEvent.msg
-                      ControllerInfo.msg
                       DockInfraRed.msg
                       KeyboardInput.msg
-                      MotorPower.msg
-                      ScanAngle.msg
                       XbotState.msg
-                      face_pose.msg
                       ImuNine.msg
+                      ImuYRP.msg
+                      Echos.msg
                       NaviState.msg
                  )
 

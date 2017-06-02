@@ -74,7 +74,7 @@ public:
 private:
   void update()
   {
-    ros::Rate spin_rate(10);
+    ros::Rate spin_rate(10);//check the state every 0.1sec
     while (!shutdown_requested_ && ros::ok() && xbot_->update())
     {
       spin_rate.sleep();

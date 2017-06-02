@@ -38,21 +38,37 @@ public:
   CoreSensors() : packet_handler::payloadBase(false, 42) {};
 
   struct Data {
-     float power_voltage;
-     uint16_t infred_1;
-     u_int16_t infred_2;
-     float current_1;
-     float current_2;
-     float current_3;
-     float echo_1;
-     float echo_2;
-     float echo_3;
-     float echo_4;
-     uint16_t left_encoder;
-     uint16_t right_encoder;
-     uint16_t up_encoder;
-     uint8_t charger;
-     uint8_t battery;
+     float battery_voltage;
+     uint16_t rear_left_infred;
+     uint16_t rear_center_infred;
+     uint16_t rear_right_infred;
+     float front_left_current;
+     float front_right_current;
+     float rear_left_current;
+     float rear_right_current;
+     float up_down_current;
+     float front_left_echo;
+     float front_center_echo;
+     float front_right_echo;
+     uint16_t front_left_encoder;
+     uint16_t front_right_encoder;
+     uint16_t rear_left_encoder;
+     uint16_t rear_right_encoder;
+     uint16_t up_down_encoder;
+     short acce_x;
+     short acce_y;
+     short acce_z;
+     short gyro_x;
+     short gyro_y;
+     short gyro_z;
+     short mag_x;
+     short mag_y;
+     short mag_z;
+     float pressure;
+     short yaw;
+     short pitch;
+     short roll;
+     unsigned int timestamp;
   } data;
 
   struct Flags {

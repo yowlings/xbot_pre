@@ -25,7 +25,6 @@
 #include <ecl/threads/mutex.hpp>
 #include <ecl/exceptions/standard_exception.hpp>
 #include "parameters.hpp"
-#include "event_manager.hpp"
 #include "command.hpp"
 #include "modules.hpp"
 #include "packets.hpp"
@@ -120,7 +119,6 @@ public:
   float getHeading() const;
   int getDebugSensors() const;
   float getAngularVelocity() const;
-  Battery batteryStatus() const { return Battery(core_sensors.data.battery, core_sensors.data.charger); }
   unsigned char getHeightPercent() {return HeightPercent;}
   unsigned char getCameraDegree(){return CameraDegree;}
   unsigned char getPlatformDegree(){return PlatformDegree;}
@@ -214,20 +212,14 @@ private:
   Command xbot_command; // used to maintain some state about the command history
   Command::Buffer command_buffer;
 
-  /*********************
-  ** Events
-  **********************/
-  EventManager event_manager;
 
   /*********************
   ** Signals
   **********************/
-  ecl::Signal<> sig_stream_data, sig_controller_info;
+  ecl::Signal<> sig_stream_data;
   ecl::Signal<const std::string&> sig_debug, sig_info, sig_warn, sig_error;
-  ecl::Signal<const std::vector<std::string>&> sig_named;
   ecl::Signal<Command::Buffer&> sig_raw_data_command; // should be const, but pushnpop is not fully realised yet for const args in the formatters.
   ecl::Signal<PacketFinder::BufferType&> sig_raw_data_stream; // should be const, but pushnpop is not fully realised yet for const args in the formatters.
-  ecl::Signal<const std::vector<float>&> sig_raw_control_command;
 };
 
 } // namespace xbot
