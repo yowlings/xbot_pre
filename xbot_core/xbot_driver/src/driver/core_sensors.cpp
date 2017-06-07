@@ -56,6 +56,8 @@ bool CoreSensors::deserialise(ecl::PushAndPop<unsigned char> & byteStream)
 //    std::cout << "bytestream.size:"<<byteStream.size()<<std::endl<<"xbot_node: xbot_default: deserialise failed. not enough byte stream." << std::endl;
 //    return false;
 //  }
+  unsigned char data_type;
+  buildVariable(data_type, byteStream);
 
 //  std::cout<<"header_id:"<<(unsigned int)header_id<<std::endl;
   unsigned char power_num;

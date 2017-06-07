@@ -107,6 +107,7 @@ bool Command::serialise(ecl::PushAndPop<unsigned char> & byteStream)
     case BaseControl:
       buildBytes(cmd, byteStream);
       buildBytes(data.speed, byteStream);
+      buildBytes(data.speed, byteStream);
       buildBytes(data.radius, byteStream);
       break;
     case Power:
