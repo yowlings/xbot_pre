@@ -153,6 +153,7 @@ void XbotRos::publishRawInertia()
   {
     // Publish as shared pointer to leverage the nodelets' zero-copy pub/sub feature
     xbot_msgs::ImuNinePtr msg(new xbot_msgs::ImuNine);
+    msg->header.stamp = ros::Time::now();
     msg->accex = xbot.getImuSensorData().acce_x;
     msg->gyrox = xbot.getImuSensorData().gyro_x;
     msg->magx = xbot.getImuSensorData().mag_x;
