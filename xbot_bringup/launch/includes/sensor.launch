@@ -1,7 +1,7 @@
 <!-- asus sensor  driver-->
 <launch>
   <arg name="camera" default="camera"/>
-  <arg name="publish_tf" default="false"/>
+  <arg name="publish_tf" default="true"/>
   <arg name="3d_sensor" default="asus_xtion_pro"/>
 
   <!-- Factory-calibrated depth registration -->

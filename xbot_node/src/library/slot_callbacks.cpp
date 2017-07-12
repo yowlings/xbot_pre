@@ -124,6 +124,7 @@ void XbotRos::publishInertia()
       msg->header.stamp = ros::Time::now();
 
       msg->orientation = tf::createQuaternionMsgFromRollPitchYaw(0.0, 0.0, xbot.getHeading());
+//      msg->orientation = tf::createQuaternionMsgFromRollPitchYaw(0.0, 0.0, );
 
 
       // set a non-zero covariance on unused dimensions (pitch and roll); this is a requirement of robot_pose_ekf
