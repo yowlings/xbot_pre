@@ -56,23 +56,24 @@ bool CoreSensors::deserialise(ecl::PushAndPop<unsigned char> & byteStream)
 //    std::cout << "bytestream.size:"<<byteStream.size()<<std::endl<<"xbot_node: xbot_default: deserialise failed. not enough byte stream." << std::endl;
 //    return false;
 //  }
-  unsigned char data_type;
+  unsigned char data_type;//0x10 marker
   buildVariable(data_type, byteStream);
 
 //  std::cout<<"header_id:"<<(unsigned int)header_id<<std::endl;
-  unsigned char power_num;
+  unsigned char power_num;//0x01 num of power
   buildVariable(power_num, byteStream);
 //  std::cout<<"power_num:"<<(unsigned int)power_num<<std::endl;
 
   build_special_variable(data.battery_voltage,byteStream);
 //  std::cout<<"power_voltage:"<<data.power_voltage<<std::endl;
-  unsigned char infred_num;
+  unsigned char infred_num;//0x03
   buildVariable(infred_num, byteStream);
   buildVariable(data.rear_left_infred,byteStream);
   buildVariable(data.rear_center_infred,byteStream);
+  std::cout<<"rear_center_infred:"<<data.rear_center_infred<<std::endl;
   buildVariable(data.rear_right_infred,byteStream);
 
-  unsigned char current_num;
+  unsigned char current_num;//0x05
   buildVariable(current_num,byteStream);
   build_special_variable(data.front_left_current,byteStream);
   build_special_variable(data.front_right_current,byteStream);
@@ -84,12 +85,15 @@ bool CoreSensors::deserialise(ecl::PushAndPop<unsigned char> & byteStream)
   buildVariable(echo_num,byteStream);
   build_special_variable(data.front_left_echo,byteStream);
   build_special_variable(data.front_center_echo,byteStream);
+  std::cout<<"front_center_echo:"<<data.front_center_echo<<std::endl;
   build_special_variable(data.front_right_echo,byteStream);
 
   unsigned char encoder_num;
   buildVariable(encoder_num, byteStream);
   buildVariable(data.front_left_encoder, byteStream);
+//  std::cout<<"front_left:"<<data.front_left_encoder<<std::endl;
   buildVariable(data.front_right_encoder, byteStream);
+//  std::cout<<"front_right:"<<data.front_right_encoder<<std::endl;
   buildVariable(data.rear_left_encoder, byteStream);
   buildVariable(data.rear_right_encoder, byteStream);
   buildVariable(data.up_down_encoder, byteStream);
@@ -110,6 +114,13 @@ bool CoreSensors::deserialise(ecl::PushAndPop<unsigned char> & byteStream)
   buildVariable(data.pitch, byteStream);
   buildVariable(data.roll, byteStream);
   buildVariable(data.timestamp, byteStream);
+
+//  std::cout<<"timestamp:"<<data.timestamp<<std::endl;
+//  unsigned short x=3;
+//  unsigned short y=65500;
+//  unsigned short result=x-y;
+
+//  std::cout<<"sizeof timestamp:"<<result<<std::endl;
 
 
 //  std::cout<<"time:"<<time(0)<<"|left_encoder:"<<data.left_encoder<<std::endl;

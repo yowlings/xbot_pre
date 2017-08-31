@@ -16,7 +16,7 @@ Header header
 ###################
 # Timestamp and battery voltage
 ###################
-uint32 time_stamp      # milliseconds starting when turning on Xbot (max. 65536, then starts from 0 again)
+uint16 time_stamp      # milliseconds starting when turning on Xbot (max. 65536, then starts from 0 again)
 float32  battery_voltage         # battery voltage in float (24V~29.5V)
 
 ###################

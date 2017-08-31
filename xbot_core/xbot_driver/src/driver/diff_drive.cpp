@@ -32,9 +32,9 @@ DiffDrive::DiffDrive() :
 //  v(0.0), w(0.0), // command velocities, in [m/s] and [rad/s]
   angular_velocity(0.0), linear_velocity(0.0), // command velocities, in [mm] and [mm/s]
   point_velocity(2,0.0), // command velocities, in [m/s] and [rad/s]
-  bias(0.388*3651/3600), // wheelbase, wheel_to_wheel, in [m]
-  wheel_radius(0.085), // radius of main wheel, in [m]
-  tick_to_rad(0.00078539815f),
+  bias(0.49), // wheelbase, wheel_to_wheel, in [m]
+  wheel_radius(0.095), // radius of main wheel, in [m]
+  tick_to_rad(0.0003925740f),
   diff_drive_kinematics(bias, wheel_radius)
 {}
 
@@ -89,7 +89,7 @@ void DiffDrive::update(const unsigned int &time_stamp,
 
   if (curr_timestamp != last_timestamp)
   {
-    last_diff_time =0.02;//((double)(short)((curr_timestamp - last_timestamp) & 0xffff)) / 1000000.0f;
+    last_diff_time =((double)(short)((curr_timestamp - last_timestamp) & 0xffff)) / 1000000.0f;
     last_timestamp = curr_timestamp;
     last_velocity_left = (tick_to_rad * left_diff_ticks) / last_diff_time;
     last_velocity_right = (tick_to_rad * right_diff_ticks) / last_diff_time;

@@ -12,8 +12,9 @@
 *****************************************************************************/
 
 #include <sstream>
+#include <fstream>
 #include "../../include/xbot_driver/packet_handler/packet_finder.hpp"
-
+using namespace std;
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
@@ -115,10 +116,18 @@ void PacketFinderBase::getBuffer(BufferType & bufferRef)
 void PacketFinderBase::getPayload(BufferType & bufferRef)
 {
   bufferRef.clear();
-  bufferRef.resize( buffer.size() - size_stx - size_etx - size_length_field - size_checksum_field );
-  for (unsigned int i = size_stx + size_length_field; i < buffer.size() - size_etx - size_checksum_field; i++) {
+//  std::cout<<"etx.size:"<<size_etx<<std::endl;
+  //bufferRef.resize( buffer.size() - size_stx - size_etx - size_length_field - size_checksum_field );
+
+  bufferRef.resize( buffer.size() - size_stx  - size_length_field - size_checksum_field );
+  //for (unsigned int i = size_stx + size_length_field; i < buffer.size() - size_etx - size_checksum_field; i++) {
+  for (unsigned int i = size_stx + size_length_field; i < buffer.size()  - size_checksum_field; i++) {
     bufferRef.push_back(buffer[i]);
   }
+//  std::cout<<"buffer.size:"<<buffer.size()<<std::endl;
+
+//  ofstream outfile("~/debug.txt", ofstream::app);
+//  outfile<<"buffer size:"<<buffer.size()<<endl<<"stx size:"<<size_stx;
 }
 
 /**

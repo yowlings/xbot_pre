@@ -68,7 +68,7 @@ public:
      short yaw;
      short pitch;
      short roll;
-     unsigned int timestamp;
+     unsigned short timestamp;
   } data;
 
   struct Flags {

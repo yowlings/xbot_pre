@@ -11,6 +11,7 @@
  *****************************************************************************/
 
 #include <cmath>
+#include <fstream>
 #include <ecl/math.hpp>
 #include <ecl/geometry/angle.hpp>
 #include <ecl/time/sleep.hpp>
@@ -237,7 +238,8 @@ void Xbot::spin()
       packet_finder.getPayload(data_buffer);// get a reference to packet finder's buffer.
 
       lockDataAccess();
-      std::cout<<"data_buffer.size:"<<data_buffer.size()<<std::endl;
+//      std::cout<<"data_buffer.size:"<<data_buffer.size()<<std::endl;
+
 
       while (data_buffer.size() >0)
       {
