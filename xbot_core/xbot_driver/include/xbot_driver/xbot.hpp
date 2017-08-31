@@ -148,7 +148,7 @@ public:
   **********************/
   void setBaseControl(const float &linear_velocity, const float &angular_velocity);
   void setLiftControl(const unsigned char &height_percent);
-  void setPlatformCameraControl(const unsigned char &platform_degree, const unsigned char &camera_degree);
+  void setCloudCameraControl(const unsigned char &platform_degree, const unsigned char &camera_degree);
   void resetXbot();
 
 private:

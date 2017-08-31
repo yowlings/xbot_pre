@@ -94,11 +94,15 @@ void XbotRos::subscribeResetOdometry(const std_msgs::EmptyConstPtr /* msg */)
   xbot.resetOdometry();
   return;
 }
-
-void XbotRos::subscribeMotorControlCommand(const xbot_msgs::XbotState msg)
+void XbotRos::subscribeLiftCommand(const xbot_msgs::LiftConstPtr msg)
 {
-    xbot.setLiftControl(msg.height_percent);
-    xbot.setPlatformCameraControl(msg.platform_degree, msg.camera_degree);
+  xbot.setLiftControl(msg->height_percent);
+}
+
+void XbotRos::subscribeCloudCameraCommand(const xbot_msgs::CloudCameraConstPtr msg)
+{
+
+    xbot.setCloudCameraControl(msg->cloud_degree, msg->camera_degree);
 }
 
 

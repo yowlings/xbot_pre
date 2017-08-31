@@ -60,6 +60,8 @@
 #include <xbot_msgs/DebugSensor.h>
 #include <xbot_msgs/Echos.h>
 #include <xbot_driver/xbot.hpp>
+#include <xbot_msgs/CloudCamera.h>
+#include <xbot_msgs/Lift.h>
 #include <xbot_msgs/XbotState.h>
 #include <xbot_msgs/ImuNine.h>
 #include "odometry.hpp"
@@ -105,8 +107,10 @@ private:
   ros::Publisher robot_state_publisher;
 
   ros::Subscriber velocity_command_subscriber;
+  ros::Subscriber lift_command_subscirber;
+  ros::Subscriber cloudplatform_command_subscriber;
   ros::Subscriber reset_odometry_subscriber;
-  ros::Subscriber motor_control_subscriber;
+  ros::Subscriber cloud_camera_subscriber;
 
   void advertiseTopics(ros::NodeHandle& nh);
   void subscribeTopics(ros::NodeHandle& nh);
@@ -115,8 +119,9 @@ private:
   ** Ros Callbacks
   **********************/
   void subscribeVelocityCommand(const geometry_msgs::TwistConstPtr);
+  void subscribeLiftCommand(const xbot_msgs::LiftConstPtr);
+  void subscribeCloudCameraCommand(const xbot_msgs::CloudCameraConstPtr);
   void subscribeResetOdometry(const std_msgs::EmptyConstPtr);
-  void subscribeMotorControlCommand(const xbot_msgs::XbotState msg);
 
   /*********************
    ** SigSlots

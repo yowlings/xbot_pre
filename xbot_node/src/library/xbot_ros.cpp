@@ -281,7 +281,7 @@ void XbotRos::advertiseTopics(ros::NodeHandle& nh)
   raw_control_command_publisher = nh.advertise< std_msgs::Int16MultiArray > ("debug/raw_control_command", 100);
 
   debug_sensors_publisher = nh.advertise < xbot_msgs::DebugSensor> ("debug/sensors_data",100);
-  robot_state_publisher = nh.advertise <xbot_msgs::XbotState> ("xbot/state",100);
+//  robot_state_publisher = nh.advertise <xbot_msgs::XbotState> ("xbot/state",100);
 }
 
 /**
@@ -291,8 +291,9 @@ void XbotRos::advertiseTopics(ros::NodeHandle& nh)
 void XbotRos::subscribeTopics(ros::NodeHandle& nh)
 {
   velocity_command_subscriber = nh.subscribe(std::string("commands/velocity"), 10, &XbotRos::subscribeVelocityCommand, this);
+//  lift_command_subscirber = nh.subscribe("commands/lift", 10, &XbotRos::subscribeLiftCommand, this);
   reset_odometry_subscriber = nh.subscribe("commands/reset_odometry", 10, &XbotRos::subscribeResetOdometry, this);
-  motor_control_subscriber = nh.subscribe("commands/other_motors", 10, &XbotRos::subscribeMotorControlCommand, this);
+//  cloud_camera_subscriber = nh.subscribe("commands/cloud_camera", 10, &XbotRos::subscribeCloudCameraCommand, this);
 }
 
 

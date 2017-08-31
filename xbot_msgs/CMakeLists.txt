@@ -8,7 +8,9 @@ add_message_files(DIRECTORY msg
                       DebugSensor.msg
                       DockInfraRed.msg
                       KeyboardInput.msg
+                      CloudCamera.msg
                       XbotState.msg
+                      Lift.msg
                       ImuNine.msg
                       ImuYRP.msg
                       Echos.msg

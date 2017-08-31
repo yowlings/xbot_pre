@@ -201,7 +201,7 @@ void XbotRos::publishRobotState()
         CoreSensors::Data data = xbot.getCoreSensorData();
 
         msg->height_percent = xbot.getHeightPercent();
-        msg->platform_degree = xbot.getPlatformDegree();
+        msg->cloud_degree = xbot.getPlatformDegree();
         msg->camera_degree = xbot.getCameraDegree();
         robot_state_publisher.publish(msg);
         r.sleep();
