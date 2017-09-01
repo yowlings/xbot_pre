@@ -58,6 +58,7 @@ Xbot::Xbot() :
     , HeightPercent(0)
     , CameraDegree(90)
     , PlatformDegree(90)
+    , Power(0)
 {
 
 }
@@ -337,6 +338,7 @@ float Xbot::getAngularVelocity() const
 void Xbot::resetXbotState()
 {
     setLiftControl(0);
+    setPowerControl(1);
     setCloudCameraControl(90,90);
 }
 
@@ -387,6 +389,11 @@ void Xbot::setBaseControl(const float &linear_velocity, const float &angular_vel
 
 }
 
+void Xbot::setPowerControl(const bool &power)
+{
+  sendCommand(Command::SetPowerControl(power));
+  Power = power;
+}
 
 void Xbot::setLiftControl(const unsigned char &height_percent)
 {

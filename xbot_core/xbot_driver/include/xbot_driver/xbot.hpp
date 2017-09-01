@@ -122,6 +122,7 @@ public:
   unsigned char getHeightPercent() {return HeightPercent;}
   unsigned char getCameraDegree(){return CameraDegree;}
   unsigned char getPlatformDegree(){return PlatformDegree;}
+  bool getPowerState(){return Power;}
 
   /******************************************
   ** Getters - Raw Data Api
@@ -149,6 +150,7 @@ public:
   void setBaseControl(const float &linear_velocity, const float &angular_velocity);
   void setLiftControl(const unsigned char &height_percent);
   void setCloudCameraControl(const unsigned char &platform_degree, const unsigned char &camera_degree);
+  void setPowerControl(const bool &power);
   void resetXbot();
 
 private:
@@ -164,6 +166,7 @@ private:
   unsigned char HeightPercent;
   unsigned char PlatformDegree;
   unsigned char CameraDegree;
+  bool Power;
 
   /*********************
   ** Odometry

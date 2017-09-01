@@ -75,7 +75,7 @@ Command Command::SetPlatformAndCameraControl(const unsigned char &platform_angle
 
 }
 
-Command Command::SetPowerControl(const unsigned char &power_state)
+Command Command::SetPowerControl(const bool &power_state)
 {
     Command outgoing;
     outgoing.data.power_state = power_state;

@@ -11,6 +11,7 @@ add_message_files(DIRECTORY msg
                       CloudCamera.msg
                       XbotState.msg
                       Lift.msg
+                      Power.msg
                       ImuNine.msg
                       ImuYRP.msg
                       Echos.msg

@@ -64,6 +64,7 @@
 #include <xbot_msgs/Lift.h>
 #include <xbot_msgs/XbotState.h>
 #include <xbot_msgs/ImuNine.h>
+#include <xbot_msgs/Power.h>
 #include "odometry.hpp"
 
 /*****************************************************************************
@@ -109,6 +110,7 @@ private:
   ros::Subscriber velocity_command_subscriber;
   ros::Subscriber lift_command_subscirber;
   ros::Subscriber cloudplatform_command_subscriber;
+  ros::Subscriber power_command_subscriber;
   ros::Subscriber reset_odometry_subscriber;
   ros::Subscriber cloud_camera_subscriber;
 
@@ -122,6 +124,7 @@ private:
   void subscribeLiftCommand(const xbot_msgs::LiftConstPtr);
   void subscribeCloudCameraCommand(const xbot_msgs::CloudCameraConstPtr);
   void subscribeResetOdometry(const std_msgs::EmptyConstPtr);
+  void subscribePowerCommand(const xbot_msgs::PowerConstPtr);
 
   /*********************
    ** SigSlots

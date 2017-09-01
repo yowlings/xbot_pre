@@ -94,6 +94,12 @@ void XbotRos::subscribeResetOdometry(const std_msgs::EmptyConstPtr /* msg */)
   xbot.resetOdometry();
   return;
 }
+void XbotRos::subscribePowerCommand(const xbot_msgs::PowerConstPtr msg)
+{
+  xbot.setPowerControl(msg->power);
+
+}
+
 void XbotRos::subscribeLiftCommand(const xbot_msgs::LiftConstPtr msg)
 {
   xbot.setLiftControl(msg->height_percent);

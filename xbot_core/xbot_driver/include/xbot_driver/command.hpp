@@ -72,7 +72,7 @@ public:
     unsigned char lift_height;
     unsigned char platform_angle;
     unsigned char camera_angle;
-    unsigned char power_state;
+    bool power_state;
 
 
 
@@ -84,7 +84,7 @@ public:
   static Command SetVelocityControl(const float &speed, const float &radius);
   static Command SetLiftHeightControl(const unsigned char &lift_height);
   static Command SetPlatformAndCameraControl(const unsigned char &platform_angle, const unsigned char &camera_angle);
-  static Command SetPowerControl(const unsigned char &power_state);
+  static Command SetPowerControl(const bool &power_state);
   Data data;
 
   void resetBuffer(Buffer &buffer);

@@ -291,9 +291,10 @@ void XbotRos::advertiseTopics(ros::NodeHandle& nh)
 void XbotRos::subscribeTopics(ros::NodeHandle& nh)
 {
   velocity_command_subscriber = nh.subscribe(std::string("commands/velocity"), 10, &XbotRos::subscribeVelocityCommand, this);
-//  lift_command_subscirber = nh.subscribe("commands/lift", 10, &XbotRos::subscribeLiftCommand, this);
+  lift_command_subscirber = nh.subscribe("commands/lift", 10, &XbotRos::subscribeLiftCommand, this);
+  power_command_subscriber = nh.subscribe("commands/power", 10, &XbotRos::subscribePowerCommand, this);
   reset_odometry_subscriber = nh.subscribe("commands/reset_odometry", 10, &XbotRos::subscribeResetOdometry, this);
-//  cloud_camera_subscriber = nh.subscribe("commands/cloud_camera", 10, &XbotRos::subscribeCloudCameraCommand, this);
+  cloud_camera_subscriber = nh.subscribe("commands/cloud_camera", 10, &XbotRos::subscribeCloudCameraCommand, this);
 }
 
 
