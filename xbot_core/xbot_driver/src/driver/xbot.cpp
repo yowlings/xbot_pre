@@ -58,7 +58,7 @@ Xbot::Xbot() :
     , HeightPercent(0)
     , CameraDegree(90)
     , PlatformDegree(90)
-    , Power(0)
+    , Power(1)
 {
 
 }

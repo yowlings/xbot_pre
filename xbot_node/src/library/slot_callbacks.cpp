@@ -198,6 +198,7 @@ void XbotRos::publishRobotState()
     if ( ros::ok() && (robot_state_publisher.getNumSubscribers() > 0) )
     {
         xbot_msgs::XbotStatePtr msg(new xbot_msgs::XbotState);
+        msg->header.stamp = ros::Time::now();
         msg->power_state = xbot.getPowerState();
         msg->height_percent = xbot.getHeightPercent();
         msg->cloud_degree = xbot.getPlatformDegree();
@@ -221,9 +222,9 @@ void XbotRos::publishDockIRData()
             CoreSensors::Data data_infred = xbot.getCoreSensorData();
             msg->header.frame_id = "dock_ir_link";
             msg->header.stamp = ros::Time::now();
-            msg->rear_left_infred=(data_infred.front_left_echo<=0.07)?1:8;
-            msg->rear_center_infred=(data_infred.front_center_echo<=0.2)?2:16;
-            msg->rear_right_infred=(data_infred.front_right_echo<=0.07)?4:32;
+            msg->rear_left_infred=(data_infred.rear_left_infred<=0.07)?1:8;
+            msg->rear_center_infred=(data_infred.rear_center_infred<=0.2)?2:16;
+            msg->rear_right_infred=(data_infred.rear_right_infred<=0.07)?4:32;
             dock_ir_publisher.publish(msg);
         }
     }
