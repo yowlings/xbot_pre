@@ -137,7 +137,7 @@ void DiffDrive::velocityCommands(const float &vx, const float &wz) {
   // wz: in rad/s
   velocity_mutex.lock();
   linear_velocity = vx;
-  angular_velocity = wz/1.23;
+  angular_velocity = wz/1.85;
   velocity_mutex.unlock();
     return;
 }
