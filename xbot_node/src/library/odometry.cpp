@@ -139,9 +139,9 @@ void Odometry::publishOdometry(const geometry_msgs::Quaternion &odom_quat,
   odom->pose.pose.orientation = odom_quat;
 
   // Velocity
-  odom->twist.twist.linear.x = pose_update_rates[0];
+  odom->twist.twist.linear.x = -pose_update_rates[0];
   odom->twist.twist.linear.y = pose_update_rates[1];
-  odom->twist.twist.angular.z = pose_update_rates[2];
+  odom->twist.twist.angular.z = -pose_update_rates[2];
 
   // Pose covariance (required by robot_pose_ekf) TODO: publish realistic values
   // Odometry yaw covariance must be much bigger than the covariance provided
