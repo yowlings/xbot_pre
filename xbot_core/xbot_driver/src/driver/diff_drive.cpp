@@ -71,7 +71,7 @@ void DiffDrive::update(const unsigned int &time_stamp,
   }
   left_diff_ticks = (float)(short)((curr_tick_left - last_tick_left) & 0xffff);
   last_tick_left = curr_tick_left;
-  last_rad_left += tick_to_rad * left_diff_ticks;
+  last_rad_left -= tick_to_rad * left_diff_ticks;
 
   curr_tick_right = right_encoder;
   if (!init_r)
@@ -81,7 +81,7 @@ void DiffDrive::update(const unsigned int &time_stamp,
   }
   right_diff_ticks = (float)(short)((curr_tick_right - last_tick_right) & 0xffff);
   last_tick_right = curr_tick_right;
-  last_rad_right += tick_to_rad * right_diff_ticks;
+  last_rad_right -= tick_to_rad * right_diff_ticks;
 
   // TODO this line and the last statements are really ugly; refactor, put in another place
   pose_update = diff_drive_kinematics.forward((double)(tick_to_rad * left_diff_ticks), (double)(tick_to_rad * right_diff_ticks));
