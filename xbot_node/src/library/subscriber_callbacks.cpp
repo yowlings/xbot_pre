@@ -88,8 +88,6 @@ void XbotRos::subscribeResetOdometry(const std_msgs::EmptyConstPtr /* msg */)
   joint_states.velocity[2] = 0.0;
   joint_states.position[3] = 0.0; // wheel_right
   joint_states.velocity[3] = 0.0;
-  joint_states.position[4] = 0.0; // wheel_left
-  joint_states.velocity[4] = 0.0;
   odometry.resetOdometry();
   xbot.resetOdometry();
   return;

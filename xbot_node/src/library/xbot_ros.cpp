@@ -128,19 +128,18 @@ bool XbotRos::init(ros::NodeHandle& nh)
 //  joint_states.position.resize(2,0.0);
 //  joint_states.velocity.resize(2,0.0);
 //  joint_states.effort.resize(2,0.0);
-    joint_states.name.resize(5);
-    joint_states.position.resize(5);
+    joint_states.name.resize(4);
+    joint_states.position.resize(4);
     joint_states.velocity.resize(2);
-    joint_states.name[0] = "base_to_left_wheel";
-    joint_states.name[1] = "base_to_right_wheel";
-    joint_states.name[2] = "platform1_to_platform2";
-    joint_states.name[3] = "platform2_to_platform3";
-    joint_states.name[4] = "platform4_to_platform5";
+    joint_states.name[0] = "left_wheel_hinge";
+    joint_states.name[1] = "right_wheel_hinge";
+    joint_states.name[2] = "base_to_yaw_platform";
+    joint_states.name[3] = "yaw_to_pitch_platform";
     joint_states.position[0] = 0;
     joint_states.position[1] = 0;
     joint_states.position[2] = 0;
     joint_states.position[3] = 0;
-    joint_states.position[4] = 0;
+
 
 
 
