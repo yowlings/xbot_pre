@@ -1,7 +1,7 @@
 #include "ros/ros.h"
-#include "xbot_msgs/Power.h"
-#include "xbot_msgs/CloudCamera.h"
-#include "xbot_msgs/Lift.h"
+//#include "xbot_msgs/Power.h"
+//#include "xbot_msgs/CloudCamera.h"
+//#include "xbot_msgs/Lift.h"
 #include "geometry_msgs/Twist.h"
 
 int main(int argc, char **argv)
